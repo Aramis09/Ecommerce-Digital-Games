@@ -19,7 +19,7 @@ Ahora mismo se ha separado del repositorio principal, porque quede solo yo traba
 
 # Como inciar el proyecto ?
 
-1) Hacer el “npm install” en los dos directorios que se muestran en el repositorio. 
+1)Hacer el “npm install” en los dos directorios que se muestran en el repositorio. 
    /Api ---> En estos directorios hacer npm installl 
    /Client ---> En estos directorios hacer  npm install 
 
