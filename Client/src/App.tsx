@@ -24,6 +24,7 @@ import Library from "./pages/library/Library";
 import { DashboardSales } from "./components/Dashboard/Sales/DashboardSales";
 import NavbarPhone from "./phone/navBarPhone/navBarPhone";
 import { saveUserInGlobalState } from "./redux/reducer/userReducer";
+import { CheckOut } from "./pages/CheckOut/CheckOut";
 
 function App() {
   const { user, isAuthenticated }: any = useAuth0();
@@ -69,7 +70,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
-          {/* <Route path="/checkout" element={<CheckOut />} /> */}
+          <Route path="/checkout" element={<CheckOut />} />
           <Route path="/mptest" element={<Transaccion />} />
           <Route path="/friends" element={<Friends />} />
           <Route path="/failure" element={<PaymentFailed />} />
