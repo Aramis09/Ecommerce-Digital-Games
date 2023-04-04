@@ -1,10 +1,12 @@
 import styles from "../../pages/CheckOut/CheckOut.module.scss";
 import discountIcon from "../../assets/discount-2.svg";
 import { ShoppingCartType } from "../../redux/interfaces/shoppingCartInterface";
+import { Product } from "../Product/Product";
+import { calculatePrice } from "../../Controller/CheckoutController";
 interface props {
   products: ShoppingCartType[];
 }
-const CheckoutProducts = ({ products }: props) => {
+export const CheckoutProducts = ({ products }: props) => {
   return (
     <div>
       <div className={styles["items-container"]}>
@@ -18,12 +20,13 @@ const CheckoutProducts = ({ products }: props) => {
             </div>
           ))}
           <p className={styles.price}>
-            Amount Payable: ${"totalAmount,tengo que agregar"}
+            Original price: ${calculatePrice(products).amountWithoutDiscount}
           </p>
           <div className={styles.finalDiscount}>
-            <img src={discountIcon} alt="" />
+            <img src={discountIcon} alt="discount_image" />
             <p className={styles.price}>
-              Final Price Discount: ${"price total"}
+              Final Price Discount: $
+              {calculatePrice(products).amountWithDiscount}
             </p>
           </div>
         </div>
