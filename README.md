@@ -1,6 +1,6 @@
 
 # Como surgió este proyecto ? 
-Este proyecto fue creado por 8 personas, la idea principal era definir todo en un lapso de 3 semanas, sin embargo, solo terminamos trabajando 4. Es decir que casi todo lo que se ve aquí lo hicieron 4 personas, este es el link del repositorio principal: https://github.com/Aramis09/Proyecto-Final-Ecommerce-Equipo-5.  
+Este proyecto fue creado por 8 personas, la idea principal era definir todo en un lapso de 3 semanas, sin embargo, solo terminamos trabajando 4. Es decir que casi todo lo que se ve aquí lo hicieron 4 personas, este es el link del repositorio original sin mejoras: https://github.com/Aramis09/Proyecto-Final-Ecommerce-Equipo-5.  
 
 (Las contribuciones son un poco falsas, hubo cosas internas del equipo que hizo que se modificaran y marca que gente que no trabajo si trabajaron) 
 
