@@ -5,9 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { MakeGift } from "../../components/MakeGift/MakeGift";
-import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
-
 import { RootState } from "../../redux/store";
+import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
 import generateLinkPay from "../../Controller/CheckoutController";
 import CheckoutProducts from "../../components/CheckoutProducts/ChechoutProducts";
 //Tengo que hacer un solo boton para iniciar sesion, asi no se repira muchas veces lo mismo

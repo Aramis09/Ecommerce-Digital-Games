@@ -15,7 +15,7 @@ interface GenresTypes {
     state:boolean
 }
 export interface ShoppingCartType {
-    Genres:GenresTypes
+    Genres:GenresTypes[]
     ShoppingCart:ShoppinCartConexion
     background_image:string
     created:boolean
