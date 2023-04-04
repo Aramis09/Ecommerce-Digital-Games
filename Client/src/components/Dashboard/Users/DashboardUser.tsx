@@ -2,23 +2,24 @@ import { DashboardNav } from "../Nav/DashboardNav";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { getListUsers } from "../../../redux/actions/userAction";
 import { useEffect, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { BLOCK_USER, USER_ADMIN } from "../../../utils/constants";
 import axios from "axios";
 import iconSearch from "../../../assets/search.svg";
 import trashIcon from "../../../assets/trash-x-filled.svg";
 import styles from "./DashboardUsers.module.css";
 import { User } from "../../../types";
+import { RootState } from "../../../redux/store";
 
 export const DashboardUser = () => {
   const dispatch = useAppDispatch();
   let listUsersData = useAppSelector(
     (state) => state.userReducer.listUsersData
   );
-  const { user } = useAuth0();
   const [searchUser, setSearchUser] = useState("");
   const [newSearch, setNewSearch] = useState<User[]>([]);
-
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   useEffect(() => {
     dispatch(getListUsers());
   }, []);

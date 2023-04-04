@@ -1,11 +1,13 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { confFriend, resReque } from "../../../redux/actions/friendAction";
 import styles from "./Card.module.scss";
+import { RootState } from "../../../redux/store";
 
 export const Cards = ({ friend, index }: any | number) => {
   const dispatch = useAppDispatch();
-  const { user }: any = useAuth0();
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const friendsConfirmed = useAppSelector(
     (state) => state.friendReducer.friendsConfirmed
   );

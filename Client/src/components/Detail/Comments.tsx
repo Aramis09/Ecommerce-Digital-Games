@@ -1,5 +1,4 @@
 import { useAppSelector, useAppDispatch } from "../../redux/hooks/hooks";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useState, useEffect } from "react";
 import { Comment } from "../../types";
 import { getListUsers } from "../../redux/actions/userAction";
@@ -14,11 +13,14 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 
 import { Rating, RatingChangeEvent } from "primereact/rating";
+import { RootState } from "../../redux/store";
 
 const Comments = () => {
   //Estado Global
   const game: any = useAppSelector((state) => state.productReducer.details);
-  const { user } = useAuth0();
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
 
   //Estados locales
   const [userComment, setComment] = useState("");

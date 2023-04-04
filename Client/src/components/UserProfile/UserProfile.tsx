@@ -1,10 +1,11 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import styles from "./UserProfile.module.scss";
+import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/hooks/hooks";
 
 export const UserProfile = () => {
-  const { user } = useAuth0();
-  //console.log()('UserProfile ===>', user)
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const userEmail = user?.email;
   const name = user?.name;
   const profileImage = user?.picture;

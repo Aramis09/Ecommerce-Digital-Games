@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { useState } from "react";
 import { searchFriendEmailController } from "../../Controller/searchFriendEmailController";
+import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/hooks/hooks";
 
 interface Friend {
   accept: string;
@@ -16,7 +17,9 @@ export const MakeGift: React.FC<MakeGiftProps> = ({ onVariableChange }) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [selectedFriendEmail, setSelectedFriendEmail] = useState<string>("");
   const [friendListResponse, setFriendListResponse] = useState([]);
-  const { user } = useAuth0();
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const emailUser = user?.email;
   const handleYesNoSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>
