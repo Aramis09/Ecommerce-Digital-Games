@@ -4,14 +4,16 @@ Este proyecto fue creado por 8 personas, la idea principal era definir todo en u
 
 (Las contribuciones son un poco falsas, hubo cosas internas del equipo que hizo que se modificaran y marca que gente que no trabajo si trabajaron) 
 
-Trabajadores: 
+Trabajadores:
+
+https://github.com/Aramis09 
+
 https://github.com/juancruzrocha 
 
 https://github.com/Nicrus27 
 
 https://github.com/Dagapa 
 
-https://github.com/Aramis09 
 
 Persona que ayudo cuando pudo (se te agradece mucho):  https://github.com/JJ200691 
 
