@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 import { UsersReducerState } from "../interfaces/userInterface";
 
 //Aramis: Nop puedo tipar todo porque hay cosas que parecen no servir.
 const initialState: UsersReducerState = {
-    currentUser: {},
+    currentUser:{user:null,isAuthenticated:null},
     listUsersData:[],
     idDetails: {},
     successMsg: "",
@@ -25,7 +24,7 @@ export const userReducer = createSlice({
         userByID: (state, action) => {
             state.idDetails = action.payload;
         },
-        //Aramis:Estos mensajes parecen estar sin funcionalidad, podrian ser utiles       
+        //Aramis:Estos mensajes parecen estar sin funcionalidad, podrian ser utiles (update , creo que si tiene funcionalidad, por favor verificar aramis del futuro)      
         successMsg: (state, action) => {
             state.successMsg = action.payload
         },

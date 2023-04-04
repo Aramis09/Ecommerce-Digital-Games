@@ -1,12 +1,14 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { pendingFriend, resReque } from "../../../redux/actions/friendAction";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import styles from "./pendingFriends.module.scss";
+import { RootState } from "../../../redux/store";
 
 export const PendingFr = (props: any) => {
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated }: any = useAuth0();
+  const { user, isAuthenticated } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const friendsPending = useAppSelector(
     (state) => state.friendReducer.FriendsPending
   );

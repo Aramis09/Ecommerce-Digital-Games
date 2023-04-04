@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { getListUsers } from "../../../redux/actions/userAction";
 import { getAllProducts } from "../../../redux/actions/productAction";
-import { useAuth0 } from "@auth0/auth0-react";
 import { EDIT_PRODUCT } from "../../../utils/constants";
 import { Game } from "../../../types";
 import axios from "axios";
@@ -12,6 +11,7 @@ import trashIcon from "../../../assets/trash-x-filled.svg";
 import sendIcon from "../../../assets/send.svg";
 import editIcon from "../../../assets/edit.svg";
 import styles from "./DashboardProducts.module.css";
+import { RootState } from "../../../redux/store";
 
 export const DashboardProducts = () => {
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +30,11 @@ export const DashboardProducts = () => {
   let listUsersData = useAppSelector(
     (state) => state.userReducer.listUsersData
   );
-  const { user } = useAuth0();
+
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
+
   const getAdmins = listUsersData.map((user) => {
     if (user.admin === true) return user;
   });
@@ -192,7 +196,8 @@ export const DashboardProducts = () => {
                       src={editIcon}
                       onClick={() => setShowModal(true)}
                     />
-                    <button className={styles["send-changes"]}
+                    <button
+                      className={styles["send-changes"]}
                       onClick={() => {
                         handlerProductChange(
                           name,
@@ -211,11 +216,11 @@ export const DashboardProducts = () => {
                         );
                       }}
                     >
-                    <img
-                      src={sendIcon}
-                      className={styles["send-changes"]}
-                      alt=""
-                    />
+                      <img
+                        src={sendIcon}
+                        className={styles["send-changes"]}
+                        alt=""
+                      />
                     </button>
                   </div>
                 </div>
@@ -251,7 +256,7 @@ export const DashboardProducts = () => {
                     onClick={() => setShowModal(true)}
                   />
                   <button
-                  className={styles["send-changes"]}
+                    className={styles["send-changes"]}
                     onClick={() => {
                       handlerProductChange(
                         name,

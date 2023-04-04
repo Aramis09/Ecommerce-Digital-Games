@@ -1,5 +1,4 @@
 import react, { useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { getAllProductInWishList } from "../../redux/actions/wishActions";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
@@ -12,7 +11,9 @@ const WishList = () => {
   const wishListStore = useAppSelector(
     (state: RootState) => state.wishReducer.wishList
   );
-  const { user } = useAuth0();
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const dispatch = useAppDispatch();
   useEffect(() => {
     const email: string = String(user?.email);

@@ -14,7 +14,8 @@ let discount = {
 		genre: "Action",
 		discount: 20,
 };
-const generateLinkPay = async (productsShoppingCart:ShoppingCartType[],nameUser:string,emailToBill:string):Promise<string> => {
+const generateLinkPay = async (productsShoppingCart:ShoppingCartType[],nameUser:string,emailToBill:string):Promise<string | undefined> => {
+	//Aramis: Esto tiene que tener un manejo del error en caso de que las cosas fallen.
 	const items = productsShoppingCart;
 	const client:clientType = {
 			name: nameUser,
@@ -27,7 +28,6 @@ const generateLinkPay = async (productsShoppingCart:ShoppingCartType[],nameUser:
 			discount,
 		})
 		).data.response;
-	//Setea el link para ponerle en un ancor y asi poder acceder.
 	if (dataMercadoPago.init_point) return dataMercadoPago.init_point;
 	
 };

@@ -2,8 +2,6 @@ import styles from "./Card.module.scss";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { ADDED_TO_CART } from "../../utils/constants";
-import { useAuth0 } from "@auth0/auth0-react";
 import {
   addProductToWishList,
   checkIfProductWasPurchased,
@@ -11,6 +9,7 @@ import {
 import { setwishList } from "../../redux/reducer/wishReducer";
 import { CardPropsType } from "../../types";
 import { addProductInShoppingCart } from "../../redux/actions/shoppingCartAction";
+import { RootState } from "../../redux/store";
 
 export const Card = ({
   id,
@@ -21,12 +20,15 @@ export const Card = ({
   state,
 }: CardPropsType) => {
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated }: any = useAuth0();
   const [changeClass, setChangeClass] = useState({
     classButton: styles.buttonAdd,
     classCard: styles.cardContainer,
   });
+  const { user, isAuthenticated } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   //AramisNote: Este useEffect lo unico que hace las clases de css dinamicas.
+
   useEffect(() => {
     if (user) {
       checkIfProductWasPurchased(user.email, id).then((check) =>

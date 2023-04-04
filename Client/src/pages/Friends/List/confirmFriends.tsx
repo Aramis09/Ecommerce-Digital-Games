@@ -1,12 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { confFriend, resReque } from "../../../redux/actions/friendAction";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from "react";
 import { Cards } from "../Cards/Card";
 import { useState } from "react";
 import styles from "./listFriend.module.scss";
 import { searchFriendEmailController } from "../../../Controller/searchFriendEmailController";
 import console from "console";
+import { RootState } from "../../../redux/store";
 
 interface Friend {
   accept: string;
@@ -24,7 +24,9 @@ export const ConfirFriends = (flag: any) => {
     (state) => state.friendReducer.friendsConfirmed
   );
   const [friendListResponse, setFriendListResponse] = useState([]);
-  const { user } = useAuth0();
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const emailUser = user?.email;
 
   useEffect(() => {

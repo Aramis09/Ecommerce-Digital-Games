@@ -1,7 +1,6 @@
 import styles from "../../pages/CheckOut/CheckOut.module.scss";
 import discountIcon from "../../assets/discount-2.svg";
 import { ShoppingCartType } from "../../redux/interfaces/shoppingCartInterface";
-import { Product } from "../Product/Product";
 import { calculatePrice } from "../../Controller/CheckoutController";
 interface props {
   products: ShoppingCartType[];

@@ -4,11 +4,9 @@ import { SearchBar } from "../SearchBar/SearchBar";
 import iconArrow from "./images/hamburger-menu-icon.png";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import icon from "./images/icon.png";
-import axios from "axios";
 import SubNavbar from "../SubNavbar/SubNavbar";
-// import { ShowDailyDiscount } from "./../ShowDailyDiscount/ShowDailyDiscount";
 
 export const NavBar = () => {
   const [showSubNavBar, setShowSubNavBar] = useState(false);

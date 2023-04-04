@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import arrowBack from "../../../assets/arrow-back.svg";
 import styles from "./DashboardNav.module.scss";
+import { useAppSelector } from "../../../redux/hooks/hooks";
+import { RootState } from "../../../redux/store";
 
 export const DashboardNav = () => {
-  const { user } = useAuth0();
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
 
   return (
     <>

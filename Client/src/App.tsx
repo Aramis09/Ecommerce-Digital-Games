@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { Home } from "./pages/Home/Home";
 import { Products } from "./pages/Products/Products";
 import { Detail } from "./components/Detail/Detail";
-// import { CheckOut } from "./pages/CheckOut/CheckOut";
 import { Transaccion } from "./pages/mercadoPagoTesting/mpLink";
 import { DiscountManager } from "./components/discountManager/DiscountManager";
 import { PaymentFailed } from "./pages/paymentFailed/PaymentFailed";
@@ -39,11 +38,16 @@ function App() {
   let adminDiscount = useAppSelector(
     (state) => state.productReducer.adminDiscount
   );
-
+  console.log("para borrar");
   const admin = listUsersData.find((item) => item.email === userEmail);
 
   useEffect(() => {
-    dispatch(saveUserInGlobalState(user));
+    dispatch(
+      saveUserInGlobalState({
+        user,
+        isAuthenticated,
+      })
+    );
   }, [user]);
 
   useEffect(() => {
