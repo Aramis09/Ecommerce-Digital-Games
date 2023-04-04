@@ -18,7 +18,6 @@ export const MakeGift: React.FC<MakeGiftProps> = ({ onVariableChange }) => {
   const [friendListResponse, setFriendListResponse] = useState([]);
   const { user } = useAuth0();
   const emailUser = user?.email;
-
   const handleYesNoSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -68,8 +67,8 @@ export const MakeGift: React.FC<MakeGiftProps> = ({ onVariableChange }) => {
             id="choose-friend-email-select"
             value={selectedFriendEmail}
             onChange={handleSelectEmailChange}
+            multiple={true}
           >
-            <option value="select a option">"select a option"</option>
             {friendListResponse?.map((property: Friend) => {
               return (
                 <option
@@ -81,7 +80,7 @@ export const MakeGift: React.FC<MakeGiftProps> = ({ onVariableChange }) => {
               );
             })}
           </select>
-          <p>Your have selected your friend's email :{selectedFriendEmail}</p>
+          <p>Your have selected your friend's email {selectedFriendEmail}</p>
         </div>
       )}
     </>

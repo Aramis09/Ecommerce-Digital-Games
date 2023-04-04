@@ -25,7 +25,7 @@ export const getProductSoppingCart = (userEmail:string) => async (dispatch:any) 
 		};
 	};
 
-export const addProductInShoppingCart = (userEmail:string,idProduct:number,dataProduct:CardPropsType) => async (dispatch:any) => { 
+export const addProductInShoppingCart = (userEmail:string,idProduct:number,dataProduct:CardPropsType|null) => async (dispatch:any) => { 
     if(userEmail !== "noLoginUser"){
         axios(`${ADD_NEW_PRODUCT_IN_SHOPPING_CART}?email=${userEmail}&idProduct=${idProduct}`).then((newShoppingCartList) =>{
             dispatch(setShoppingCartInGlobalState(newShoppingCartList.data));
@@ -33,8 +33,10 @@ export const addProductInShoppingCart = (userEmail:string,idProduct:number,dataP
 		return; 
 	};
     //AramisWork:tengo que ver si esto se ejecuta cuando hay un usuario, no deberia. Este  error que marca es por este tema
-	saveProductShoopingCartInLocalStorage(idProduct,dataProduct);
-	dispatch(getProductSoppingCart(userEmail));
+	if(dataProduct){ //Aramis:Este if de verificacion es porque sino typeScript llora.
+		saveProductShoopingCartInLocalStorage(idProduct,dataProduct);
+		dispatch(getProductSoppingCart(userEmail));
+	};
 };
 
 export const removeProductOfShoppingCart = (userEmail:string,idProduct:number) => async (dispatch:any) => { 

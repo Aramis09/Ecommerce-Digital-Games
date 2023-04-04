@@ -9,7 +9,6 @@ import {
   checkIfProductWasPurchased,
 } from "../../Controller/cardController";
 import { setwishList } from "../../redux/reducer/wishReducer";
-import { RootState } from "../../redux/store";
 import { CardPropsType } from "../../types";
 import { addProductInShoppingCart } from "../../redux/actions/shoppingCartAction";
 
@@ -23,9 +22,6 @@ export const Card = ({
 }: CardPropsType) => {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated }: any = useAuth0();
-  const [successMsg, setSuccessMsg] = useState<string>(""); //Aramis: estas cosas capaz que tenga que borrarlas
-  const [discountPrice, setDiscountPrice] = useState<number>(0); //Aramis: estas cosas capaz que tenga que borrarlas
-  const [discountApplied, setDiscountApplied] = useState<boolean>(false); //Aramis: estas cosas capaz que tenga que borrarlas
   const [changeClass, setChangeClass] = useState({
     classButton: styles.buttonAdd,
     classCard: styles.cardContainer,
@@ -46,14 +42,16 @@ export const Card = ({
       );
     }
   }, []);
+
   const addProductToWishListHanlder = async () => {
     const newWishList = await addProductToWishList(user.email, id);
     dispatch(setwishList(newWishList));
   };
+
   const handlerAddProductShoppingCart = () => {
     dispatch(
       user
-        ? addProductInShoppingCart(user.email, id)
+        ? addProductInShoppingCart(user.email, id, null)
         : addProductInShoppingCart("noLoginUser", id, {
             id,
             name,
@@ -82,16 +80,7 @@ export const Card = ({
           )}
           <div className={styles.containerTittleAndPrice}>
             <h3>{name}</h3>
-            {discountApplied ? (
-              <div>
-                <del>{`${price}`}</del>
-                <p>ON SALE: {`${discountPrice}`}</p>
-              </div>
-            ) : price === "free" ? (
-              <p>{`${price}`}</p>
-            ) : (
-              <p>{`$${price}`}</p>
-            )}
+            <p>{price}</p>
           </div>
           <div className={styles.addShoppingCart}>
             <div className={styles.containerButton}>
@@ -117,7 +106,6 @@ export const Card = ({
                 <p>Not avivable Game</p>
               )}
             </div>
-            <p className={styles.msg}>{successMsg}</p>
           </div>
         </div>
       </div>
