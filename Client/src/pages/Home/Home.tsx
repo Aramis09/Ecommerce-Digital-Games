@@ -36,6 +36,7 @@ export const Home = () => {
   return (
     <div className={styles.container}>
       {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
+
       <Carousel />
       <h2 className={styles.title}>TOP GAMES</h2>
       <Product />
