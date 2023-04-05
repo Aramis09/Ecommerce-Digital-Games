@@ -10,6 +10,7 @@ import { setwishList } from "../../redux/reducer/wishReducer";
 import { CardPropsType } from "../../types";
 import { addProductInShoppingCart } from "../../redux/actions/shoppingCartAction";
 import { RootState } from "../../redux/store";
+import ImageLazyLoad from "../ImageLazyLoad/ImageLazyLoad";
 
 export const Card = ({
   id,
@@ -71,12 +72,14 @@ export const Card = ({
         <div className={styles.card}>
           {state ? (
             <Link to={`/${id}`}>
-              <img src={background_image} alt={name} />
+              <ImageLazyLoad url={background_image} />
+              {/* <img src={background_image} alt={name} /> */}
             </Link>
           ) : (
             <>
               <Link to={"/products"}>
-                <img src={background_image} alt={name} />
+                <ImageLazyLoad url={background_image} />
+                {/* <img src={background_image} alt={name} /> */}
               </Link>
             </>
           )}
