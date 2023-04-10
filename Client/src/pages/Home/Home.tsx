@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.scss";
 import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
+import { Login } from "../../components/LoginButton/LoginButton";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,6 @@ export const Home = () => {
   return (
     <div className={styles.container}>
       {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
-
       <Carousel />
       <h2 className={styles.title}>TOP GAMES</h2>
       <Product />

@@ -23,7 +23,7 @@ export const getProductSoppingCart = (userEmail:string) => async (dispatch:any) 
 			const productSaveInLocalStorageObject:localStorageProducts = JSON.parse(productSaveInLocalStorageString);
 			dispatch(setShoppingCartInGlobalState(productSaveInLocalStorageObject.dataProducts));
 		};
-	};
+};
 
 export const addProductInShoppingCart = (userEmail:string,idProduct:number,dataProduct:CardPropsType|null) => async (dispatch:any) => { 
     if(userEmail !== "noLoginUser"){
