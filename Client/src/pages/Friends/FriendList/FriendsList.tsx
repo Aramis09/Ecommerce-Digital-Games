@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
-import { confFriend } from "../../../redux/actions/friendAction";
 import { useEffect } from "react";
 import { FriendCard } from "../friendCards/friendCard";
 import { useState } from "react";
@@ -33,7 +32,6 @@ export const FriendsList = (flag: any) => {
   ) => {
     const emailSearch = event.target.value;
     if (emailSearch && user) {
-      dispatch(confFriend(user?.email));
       searchFriendEmailController(user?.email, emailSearch).then((friend) =>
         setFriendListResponse(friend)
       );

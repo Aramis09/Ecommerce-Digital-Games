@@ -19,8 +19,7 @@ export const getPendingFriendList = async (emailUser:string):Promise<pendingFrie
 export const responseRequestFriendController = async (emailUser:string,emailFriend:string,response:string):Promise<pendingFriendListTypes[] | undefined> => {
 	console.log("pues si");
 	console.log(emailFriend,emailUser,response);
-	
-		
+
 	try {
 			await axios.get(LIST_USERS + `responseRequestFriend?email=${emailUser}&emailFriend=${emailFriend}&response=${response}`)
 			const pendingFriendList = await getPendingFriendList(emailUser).then(pendingFriendsList => pendingFriendsList)
@@ -38,4 +37,16 @@ export const friendAddedListController = async (emailUser: string) => {
 	} catch (error) {
 		console.error('Esto ocurrio en el back ' + error);
 	};
+};
+
+export const addNewFriend = async (emailUser: string, emailFriend: string) => {
+	try {
+		//Aramis:Esto que no se entiende de Daniel es cuando se manda un solicitud de amistad a una persona
+		await (await axios.get(LIST_USERS + `newFriendRequest?emailUser=${emailUser}&emailFriend=${emailFriend}`)).data;
+		
+		
+	} catch (error) {
+		console.error('Esto ocurrio en el back ' + error);
+	}
+
 };
