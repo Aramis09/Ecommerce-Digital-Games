@@ -14,7 +14,6 @@ const optionOrder = ["ASC", "DESC"];
 export const Filters = (flags: any) => {
   const dispatch = useAppDispatch();
   const [genresOpen, setGenresOpen] = useState(false);
-  const [platformsOpen, setPlatformsOpen] = useState(false);
   const [orderOpen, setOrderOpen] = useState(false);
   const [changeClass, setChangeClass] = useState({
     classContainer: styles.containerHide,
@@ -36,8 +35,6 @@ export const Filters = (flags: any) => {
     (state) => state.productReducer.selectedAlphabeticOrderData
   );
 
-  //console.log()("soy el filter","filter")
-
   useEffect(() => {
     function handleResize() {
       setSelectAttribute(window.innerWidth > 767);
@@ -54,6 +51,7 @@ export const Filters = (flags: any) => {
       ? setChangeClass({ classContainer: styles.containerShow })
       : setChangeClass({ classContainer: styles.containerHide });
   }, [flags]);
+
   const selectGenre = (dato: any) => {
     dispatch(selectedFilterGenre(parseInt(dato.target.value)));
   };
@@ -100,8 +98,7 @@ export const Filters = (flags: any) => {
           <label
             className={styles["label-tittle"]}
             onClick={() => {
-              if (platformsOpen || orderOpen) {
-                setPlatformsOpen(false);
+              if (orderOpen) {
                 setOrderOpen(false);
                 setGenresOpen(!genresOpen);
               } else {
@@ -129,9 +126,6 @@ export const Filters = (flags: any) => {
               if (genresOpen || orderOpen) {
                 setOrderOpen(false);
                 setGenresOpen(false);
-                setPlatformsOpen(!platformsOpen);
-              } else {
-                setPlatformsOpen(!platformsOpen);
               }
             }}
           ></label>
@@ -144,8 +138,7 @@ export const Filters = (flags: any) => {
           <label
             className={styles["label-tittle"]}
             onClick={() => {
-              if (platformsOpen || genresOpen) {
-                setPlatformsOpen(false);
+              if (genresOpen) {
                 setGenresOpen(false);
                 setOrderOpen(!orderOpen);
               } else {

@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
-import { confFriend, resReque } from "../../../redux/actions/friendAction";
+import {
+  confFriend,
+  respondFriendRequest,
+} from "../../../redux/actions/friendAction";
 import styles from "./Card.module.scss";
 import { RootState } from "../../../redux/store";
 
@@ -13,9 +16,8 @@ export const Cards = ({ friend, index }: any | number) => {
   );
 
   const handleResponse = (ev: React.MouseEvent<HTMLButtonElement>) => {
-    // @ts-ignore
     dispatch(
-      resReque(
+      respondFriendRequest(
         user?.email,
         friendsConfirmed[0]?.FriendInListEmail,
         ev.currentTarget.value
@@ -37,5 +39,3 @@ export const Cards = ({ friend, index }: any | number) => {
     </div>
   );
 };
-// <div key={index} className = {styles.conatiner}>
-// </div>

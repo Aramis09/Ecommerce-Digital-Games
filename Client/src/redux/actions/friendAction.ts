@@ -16,7 +16,7 @@ export const addFriend = (emailUser: string, emailFriend: string) => async (disp
 	};
 
 //Respuesta a la solicitud y eliminar solicitud
-export const resReque = (emailUser: string, emailFriend: string, res: string) => async (dispatch: any) => {
+export const respondFriendRequest = (emailUser: string, emailFriend: string, res: string) => async (dispatch: any) => {
 		try {
 			let responseReque:string = (await axios.get(User + `responseRequestFriend?email=${emailUser}&emailFriend=${emailFriend}&response=${res}`)).data;
 			dispatch(resRequest(responseReque));

@@ -1,20 +1,19 @@
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks/hooks";
 import { addFriend, confFriend } from "../../../redux/actions/friendAction";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./addFriends.module.scss";
 import { RootState } from "../../../redux/store";
 
-export const AddiFriend = () => {
+export const InputAddFriend = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(
     (state: RootState) => state.userReducer.currentUser
   );
   const [emailFriendFromInput, setEmailFriendFromInput] = useState("");
 
-  const handlerAddFriend = (event: any) => {
+  const handlerAddFriend = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const emailUser = user?.email;
-    //AramisWork: me marca el error porque tengo que agregar un if de verificacion para ver si user existe.
-    if (event.keyCode === 13) {
+    if (event.key === "Enter" && user && emailUser) {
       dispatch(addFriend(emailUser, emailFriendFromInput));
       dispatch(confFriend(user?.email));
       setEmailFriendFromInput("");

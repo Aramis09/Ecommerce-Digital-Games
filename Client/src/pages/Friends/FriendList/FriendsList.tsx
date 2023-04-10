@@ -1,41 +1,31 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
-import { confFriend, resReque } from "../../../redux/actions/friendAction";
+import { confFriend } from "../../../redux/actions/friendAction";
 import { useEffect } from "react";
 import { Cards } from "../Cards/Card";
 import { useState } from "react";
 import styles from "./listFriend.module.scss";
 import { searchFriendEmailController } from "../../../Controller/searchFriendEmailController";
-import console from "console";
 import { RootState } from "../../../redux/store";
+import { FriendConfirmed } from "../../../redux/interfaces/friendInterface";
 
-interface Friend {
-  accept: string;
-  UserMail: string;
-  FriendInListEmail: string;
-}
-
-interface MakeGiftProps {
-  onVariableChange: (value: string) => void;
-}
-
-export const ConfirFriends = (flag: any) => {
+export const FriendsList = (flag: any) => {
   const dispatch = useAppDispatch();
+  const [friendListResponse, setFriendListResponse] = useState<
+    FriendConfirmed[]
+  >([]);
   const friendsConfirmed = useAppSelector(
     (state) => state.friendReducer.friendsConfirmed
   );
-  const [friendListResponse, setFriendListResponse] = useState([]);
   const { user } = useAppSelector(
     (state: RootState) => state.userReducer.currentUser
   );
   const emailUser = user?.email;
 
   useEffect(() => {
-    // @ts-ignore
-    dispatch(confFriend(user?.email));
+    user && dispatch(confFriend(user?.email));
   }, [user?.email, flag]);
 
   useEffect(() => {
-    // @ts-ignore
     setFriendListResponse(friendsConfirmed);
   }, [friendsConfirmed]);
 
@@ -43,8 +33,7 @@ export const ConfirFriends = (flag: any) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const emailSearch = event.target.value;
-    if (!emailSearch.length) {
-      // @ts-ignore
+    if (!emailSearch.length && user) {
       dispatch(confFriend(user?.email));
     }
     searchFriendEmailController(emailUser, emailSearch).then((friend) =>
