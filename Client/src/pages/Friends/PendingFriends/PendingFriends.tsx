@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import { useAppSelector } from "../../../redux/hooks/hooks";
 import { useEffect, useState } from "react";
 import styles from "./pendingFriends.module.scss";
 import { RootState } from "../../../redux/store";
@@ -34,11 +34,10 @@ export const PendingFriends = (props: any) => {
         user?.email,
         friendsPending[0]?.UserEmail,
         ev.currentTarget.value
-      ).then(
-        (newPendingFriendList) =>
-          newPendingFriendList && setFriendsPending(newPendingFriendList)
-      );
-    response === "accept" && props.wayFlagToUpdate(Math.random());
+      ).then((newPendingFriendList) => {
+        newPendingFriendList && setFriendsPending(newPendingFriendList);
+        response === "accept" && props.wayFlagToUpdate(Math.random());
+      });
   };
 
   return (

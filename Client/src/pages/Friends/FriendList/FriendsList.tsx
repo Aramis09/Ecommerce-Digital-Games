@@ -1,46 +1,46 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { confFriend } from "../../../redux/actions/friendAction";
 import { useEffect } from "react";
-import { Cards } from "../Cards/Card";
+import { FriendCard } from "../friendCards/friendCard";
 import { useState } from "react";
 import styles from "./listFriend.module.scss";
 import { searchFriendEmailController } from "../../../Controller/searchFriendEmailController";
 import { RootState } from "../../../redux/store";
 import { FriendConfirmed } from "../../../redux/interfaces/friendInterface";
+import { friendAddedListController } from "../../../Controller/FriendsController";
 
 export const FriendsList = (flag: any) => {
+  //AramisWork:Tengo que buscar la forma que no pueda entrar a la page Friend un invitado
   const dispatch = useAppDispatch();
+  const [updateList, setUpdateList] = useState<number>(0);
   const [friendListResponse, setFriendListResponse] = useState<
     FriendConfirmed[]
   >([]);
-  const friendsConfirmed = useAppSelector(
-    (state) => state.friendReducer.friendsConfirmed
-  );
   const { user } = useAppSelector(
     (state: RootState) => state.userReducer.currentUser
   );
-  const emailUser = user?.email;
 
+  console.log(flag, "vengo de lista de amigos");
   useEffect(() => {
-    user && dispatch(confFriend(user?.email));
-  }, [user?.email, flag]);
-
-  useEffect(() => {
-    setFriendListResponse(friendsConfirmed);
-  }, [friendsConfirmed]);
+    user &&
+      friendAddedListController(user.email).then(
+        (fiendList) => fiendList && setFriendListResponse(fiendList)
+      );
+  }, [user, flag, updateList]);
 
   const searchFriendEmailHandler = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const emailSearch = event.target.value;
-    if (!emailSearch.length && user) {
+    if (emailSearch && user) {
       dispatch(confFriend(user?.email));
+      searchFriendEmailController(user?.email, emailSearch).then((friend) =>
+        setFriendListResponse(friend)
+      );
+      return;
     }
-    searchFriendEmailController(emailUser, emailSearch).then((friend) =>
-      setFriendListResponse(friend)
-    );
+    setUpdateList(Math.random());
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.containerCards}>
@@ -51,7 +51,13 @@ export const FriendsList = (flag: any) => {
         ></input>
 
         {friendListResponse.map((friend: any, index: number) => {
-          return <Cards key={index} friend={friend} />;
+          return (
+            <FriendCard
+              key={index}
+              friend={friend}
+              wayToUpdateList={(flag: number): void => setUpdateList(flag)}
+            />
+          );
         })}
       </div>
     </div>

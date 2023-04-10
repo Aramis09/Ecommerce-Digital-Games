@@ -1,4 +1,4 @@
-import { addFriends, resRequest, confirmFriend, pendFriend } from '../reducer/friendReducer';
+import { addFriends, resRequest, confirmFriend } from '../reducer/friendReducer';
 import { LIST_USERS as User } from '../../utils/constants';
 import axios from 'axios';
 import { FriendConfirmed } from "../interfaces/friendInterface";
@@ -36,12 +36,3 @@ export const confFriend = (emailUser: string) => async (dispatch: any) => {
 	};
 };
 
-//Solicitudes pendientes
-export const pendingFriend = (emailUser: string) => async (dispatch: any) => {
-	try {
-		let pending:FriendConfirmed = (await axios.get(User + `friendsPending?email=${emailUser}`)).data;
-		dispatch(pendFriend(pending));
-	} catch (error) {
-		console.error('Esto ocurrio en el back ' + error);
-	};
-};
