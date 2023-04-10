@@ -9,6 +9,7 @@ import {
 } from "../../redux/actions/shoppingCartAction";
 import { RootState } from "../../redux/store";
 import { ShoppingCartType } from "../../redux/interfaces/shoppingCartInterface";
+import { Login } from "../LoginButton/LoginButton";
 
 export const ShoppingCartItem = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -49,19 +50,13 @@ export const ShoppingCartItem = (): JSX.Element => {
           </table>
           {}
           <button className={style.checkout}>
-            {isAuthenticated ? (
-              <Link to="/checkout">
-                <p>CHECKOUT</p>
-              </Link>
-            ) : (
-              <p onClick={() => loginWithRedirect()}>Please LogIn</p>
-            )}
+            <Login from="shoopingCart" />
           </button>
         </div>
       ) : (
         <div>
           <div>
-            <p className={style.cartClean}>Empty Shopping Car</p>
+            <p className={style.cartClean}>Empty Shopping Cart</p>
           </div>
         </div>
       )}

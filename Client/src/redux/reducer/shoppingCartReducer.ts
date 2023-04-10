@@ -14,7 +14,6 @@ export const shoppingCartReducer = createSlice({
         setShoppingCartInGlobalState: (state, action) => {
             state.productListShoopingCart = action.payload;
         },
-        
     }
 })
 

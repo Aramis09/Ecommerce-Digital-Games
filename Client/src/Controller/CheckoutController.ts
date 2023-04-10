@@ -16,19 +16,23 @@ let discount = {
 };
 const generateLinkPay = async (productsShoppingCart:ShoppingCartType[],nameUser:string,emailToBill:string):Promise<string | undefined> => {
 	//Aramis: Esto tiene que tener un manejo del error en caso de que las cosas fallen.
-	const items = productsShoppingCart;
-	const client:clientType = {
-			name: nameUser,
-			email: emailToBill
-	};
-	let  dataMercadoPago = (
-		await axios.post(MERCADO_PAGO_LINK, {
-			items,
-			client,
-			discount,
-		})
-		).data.response;
-	if (dataMercadoPago.init_point) return dataMercadoPago.init_point;
+	try {
+		const items = productsShoppingCart;
+		const client:clientType = {
+				name: nameUser,
+				email: emailToBill
+		};
+		let  dataMercadoPago = (
+			await axios.post(MERCADO_PAGO_LINK, {
+				items,
+				client,
+				discount,
+			})
+			).data.response;
+		return dataMercadoPago.init_point;
+	} catch (error) {
+		console.log(error)
+	}
 	
 };
 
