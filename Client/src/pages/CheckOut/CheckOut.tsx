@@ -8,6 +8,7 @@ import { RootState } from "../../redux/store";
 import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
 import generateLinkPay from "../../Controller/CheckoutController";
 import CheckoutProducts from "../../components/CheckoutProducts/ChechoutProducts";
+
 export const CheckOut = (): JSX.Element => {
   const [friendMail, setFriendMail] = useState<string>("");
   const [init_pointButton, setInit_PointButton] = useState<string | undefined>(

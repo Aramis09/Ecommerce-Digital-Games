@@ -1,7 +1,7 @@
 import { NavBar } from "../../components/NavBar/NavBar";
-import { AddiFriend } from "./Add/addFriends";
-import { PendingFr } from "./Pending/pendingFriends";
-import { ConfirFriends } from "./List/confirmFriends";
+import { InputAddFriend } from "./InputAddFriend/InputAddFriend";
+import { PendingFriends } from "./PendingFriends/PendingFriends";
+import { FriendsList } from "./FriendList/FriendsList";
 import styles from "./Friends.module.scss";
 import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
 import { useState } from "react";
@@ -18,11 +18,11 @@ export const Friends = () => {
       {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
       <div className={styles.container}>
         <div className={styles.containerPendings}>
-          <AddiFriend />
-          <PendingFr wayFlagToUpdate={wayToSendFlag} />
+          <InputAddFriend />
+          <PendingFriends wayFlagToUpdate={wayToSendFlag} />
         </div>
         <div className={styles.containerListFriends}>
-          <ConfirFriends flag={flagFriendWasAccepted} />
+          <FriendsList flag={flagFriendWasAccepted} />
         </div>
       </div>
     </div>
