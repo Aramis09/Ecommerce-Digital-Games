@@ -25,7 +25,7 @@ export const NavBar = () => {
           />
           <SearchBar />
         </div>
-        <Login />
+        <Login from="NavBar" />
       </div>
       <SubNavbar show={showSubNavBar} />
     </nav>

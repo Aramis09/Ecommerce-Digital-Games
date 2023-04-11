@@ -1,41 +1,47 @@
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { PriceSlider } from "../PriceSlider/PriceSlider";
-import {
-  selectedFilterGenre,
-  selectedAlphabeticOrder,
-  eraseSearchedName,
-} from "../../redux/reducer/productReducer";
-import { getProductsByFilters } from "../../redux/actions/productAction";
 import styles from "./Filters.module.scss";
-
+import { genreType, getListGenres } from "../../Controller/GenresController";
+import { inititalStateFilters } from "./until";
+interface filterPropertyType {
+  genres: number[];
+  platform: [];
+  priceRange: number[];
+}
+interface orderTypes {
+  alphabetic: string;
+  price: string;
+}
+export interface filtersGeneralType {
+  name: string;
+  filters: filterPropertyType;
+  order: orderTypes;
+}
 const optionOrder = ["ASC", "DESC"];
 
-export const Filters = (flags: any) => {
-  const dispatch = useAppDispatch();
+export const Filters = ({ flag, updateListProducts, setPageNumber }: any) => {
+  //Aramis: Esto tiene que ser un solo estado global que sea un objeto que contenga todo (menos la clase).
   const [genresOpen, setGenresOpen] = useState(false);
   const [orderOpen, setOrderOpen] = useState(false);
   const [changeClass, setChangeClass] = useState({
     classContainer: styles.containerHide,
   });
+  //Aramis:Esto modifica el atributo de la etiqueta select, para mobile o desktop.
   const [selectAttribute, setSelectAttribute] = useState(true);
-  let listGenres = useAppSelector(
-    (state) => state.genresReducer.listGenresData
-  );
-  let searchedName = useAppSelector(
-    (state) => state.productReducer.searchedName
-  );
-  let selectedFilterGenreData = useAppSelector(
-    (state) => state.productReducer.selectedFilterGenreData
-  );
-  let selectedFilterPriceRangeData = useAppSelector(
-    (state) => state.productReducer.selectedFilterPriceRangeData
-  );
-  let selectedAlphabeticOrderData = useAppSelector(
-    (state) => state.productReducer.selectedAlphabeticOrderData
-  );
-
+  const [genresList, setGenresList] = useState<genreType[]>([]);
+  const [filters, setFilters] =
+    useState<filtersGeneralType>(inititalStateFilters);
   useEffect(() => {
+    flag
+      ? setChangeClass({ classContainer: styles.containerShow })
+      : setChangeClass({ classContainer: styles.containerHide });
+  }, [flag]);
+
+  //Tengo que establecer la comunicacion entre el componenete padre, hijo y el hijo con priceSlider
+  useEffect(() => {
+    getListGenres().then(
+      (genresList) => genresList && setGenresList(genresList)
+    );
     function handleResize() {
       setSelectAttribute(window.innerWidth > 767);
     }
@@ -46,51 +52,40 @@ export const Filters = (flags: any) => {
     };
   }, []);
 
-  useEffect(() => {
-    flags.flag
-      ? setChangeClass({ classContainer: styles.containerShow })
-      : setChangeClass({ classContainer: styles.containerHide });
-  }, [flags]);
-
-  const selectGenre = (dato: any) => {
-    dispatch(selectedFilterGenre(parseInt(dato.target.value)));
+  const handlerAddGenreToFilters = (dato: any) => {
+    //Capaz que seria bueno modularizarlo y llevar todo el armado del objeto a un controller, el componente es muy grande.
+    const genreId = Number(dato.target.value);
+    setFilters({
+      ...filters,
+      filters: {
+        genres: [genreId],
+        platform: [],
+        priceRange: filters.filters.priceRange,
+      },
+    });
   };
 
-  useEffect(() => {
-    filterTheSearch();
-  }, [flags.pageNumber]);
-
-  const selectAlphabeticOrder = (dato: any) => {
-    dispatch(selectedAlphabeticOrder(dato.target.value));
+  const handlerAddOrderToFilters = (evt: any) => {
+    setFilters({
+      ...filters,
+      order: {
+        alphabetic: evt.target.value,
+        price: "",
+      },
+    });
   };
+  // console.log(filters);
 
-  const filterTheSearch = () => {
-    dispatch(
-      getProductsByFilters(
-        //NO TOCAR
-        {
-          name: searchedName,
-          filters: {
-            genres: selectedFilterGenreData,
-            platform: [],
-            priceRange: selectedFilterPriceRangeData,
-          },
-          order: {
-            alphabetic: selectedAlphabeticOrderData,
-            price: "",
-          },
-        },
-        flags.pageNumber
-      )
-    );
+  const handlerAddPriceRangeToFilters = (priceRange: number[]): void => {
+    setFilters({
+      ...filters,
+      filters: {
+        genres: filters.filters.genres,
+        platform: [],
+        priceRange: priceRange,
+      },
+    });
   };
-
-  useEffect(() => {
-    return () => {
-      dispatch(eraseSearchedName());
-    };
-  }, []);
-
   return (
     <div className={changeClass.classContainer}>
       <aside className={styles["filters-container"]}>
@@ -106,33 +101,27 @@ export const Filters = (flags: any) => {
               }
             }}
           >
-            <p>Genres</p>
+            Genres
           </label>
           <select
             multiple={selectAttribute}
             className={genresOpen ? styles.open : ""}
           >
-            {listGenres.map((item: any, index: number) => (
-              <option key={index} value={item.id} onClick={selectGenre}>
+            {genresList.map((item: any, index: number) => (
+              <option
+                key={index}
+                value={item.id}
+                onClick={handlerAddGenreToFilters}
+              >
                 {item.name}
               </option>
             ))}
           </select>
         </div>
         <div className={styles["options-container"]}>
-          <label
-            className={styles["label-tittle"]}
-            onClick={() => {
-              if (genresOpen || orderOpen) {
-                setOrderOpen(false);
-                setGenresOpen(false);
-              }
-            }}
-          ></label>
-        </div>
-        <div className={styles["options-container"]}>
           <label className={styles["label-tittle"]}>Price</label>
-          <PriceSlider />
+          {/* Aramis:Tengo que  establecer una comunicacion de abajo hacia arriba con el PriceSlicer */}
+          <PriceSlider sendUpPriceRange={handlerAddPriceRangeToFilters} />
         </div>
         <div className={styles["options-container"]}>
           <label
@@ -146,7 +135,7 @@ export const Filters = (flags: any) => {
               }
             }}
           >
-            <p>Order</p>
+            Order
           </label>
           <select
             multiple={selectAttribute}
@@ -156,15 +145,26 @@ export const Filters = (flags: any) => {
               <option
                 key={option}
                 value={option}
-                onClick={selectAlphabeticOrder}
+                onClick={handlerAddOrderToFilters}
               >
                 {option}
               </option>
             ))}
           </select>
         </div>
-        <button className={styles.buttonFilter} onClick={filterTheSearch}>
-          <p>Apply Filter</p>
+        <button
+          className={styles.buttonFilter}
+          onClick={() => updateListProducts(filters)}
+        >
+          Apply Filter
+        </button>
+        <button
+          className={styles.buttonFilter}
+          onClick={() => {
+            updateListProducts(inititalStateFilters);
+          }}
+        >
+          Reset
         </button>
       </aside>
     </div>

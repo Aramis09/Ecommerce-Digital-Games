@@ -3,7 +3,7 @@ import { Home } from "./pages/Home/Home";
 import { Products } from "./pages/Products/Products";
 import { Detail } from "./components/Detail/Detail";
 import { Transaccion } from "./pages/mercadoPagoTesting/mpLink";
-import { DiscountManager } from "./components/discountManager/DiscountManager";
+// import { DiscountManager } from "./components/discountManager/DiscountManager";
 import { PaymentFailed } from "./pages/paymentFailed/PaymentFailed";
 import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -87,7 +87,7 @@ function App() {
               <Route path="/users" element={<DashboardUser />} />
               <Route path="/productsList" element={<DashboardProducts />} />
               <Route path="/sales" element={<DashboardSales />} />
-              <Route path="/discMan" element={<DiscountManager />} />
+              {/* <Route path="/discMan" element={<DiscountManager />} /> */}
             </>
           )}
         </Routes>

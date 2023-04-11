@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import { useAppSelector } from "../../../redux/hooks/hooks";
 import { useEffect } from "react";
-import { FriendCard } from "../friendCards/friendCard";
+import { FriendCard } from "../FriendCard/FriendCard";
 import { useState } from "react";
 import styles from "./listFriend.module.scss";
 import { searchFriendEmailController } from "../../../Controller/searchFriendEmailController";
@@ -10,7 +10,6 @@ import { friendAddedListController } from "../../../Controller/FriendsController
 
 export const FriendsList = (flag: any) => {
   //AramisWork:Tengo que buscar la forma que no pueda entrar a la page Friend un invitado
-  const dispatch = useAppDispatch();
   const [updateList, setUpdateList] = useState<number>(0);
   const [friendListResponse, setFriendListResponse] = useState<
     FriendConfirmed[]
