@@ -1,5 +1,5 @@
 import { Filters, filtersGeneralType } from "../../components/Filters/Filters";
-import { NavBar } from "../../components/NavBar/NavBar";
+// import { NavBar } from "../../components/NavBar/NavBar";
 import { useEffect, useState } from "react";
 import { Card } from "../../components/Card/Card";
 import styles from "./Products.module.scss";
@@ -38,13 +38,11 @@ export const Products = () => {
 
   const changePageHanlder = (ev: any) => {
     const currentPageNumber: number = Number(ev.target.value);
-    // setPageNumber(currentPageNumber);
     getProductsWithConditions(filters, currentPageNumber);
   };
 
   return (
     <div className={styles.containerAll}>
-      {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
       <div className={styles["page-container"]}>
         <img
           className={styles.iconCarrito}

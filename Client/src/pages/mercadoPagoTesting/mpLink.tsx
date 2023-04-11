@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { NavBar } from "../../components/NavBar/NavBar";
+import { useEffect } from "react";
+import { NavBarDesktop } from "../../components/NavBar/NavBarDesktop";
 import axios from "axios";
 import { MERCADO_PAGO_LINK } from "../../utils/constants";
 
@@ -54,7 +54,7 @@ export const Transaccion = () => {
 
   return (
     <div>
-      <NavBar />
+      <NavBarDesktop />
       <div>
         <p className="cho-container"></p>
       </div>

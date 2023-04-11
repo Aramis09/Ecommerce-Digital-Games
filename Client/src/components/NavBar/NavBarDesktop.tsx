@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import style from "./NavBar.module.scss";
+import style from "./NavBarDesktop.module.scss";
 import { SearchBar } from "../SearchBar/SearchBar";
 import iconHamburger from "./images/hamburger-menu-icon.png";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import icon from "./images/icon.png";
 import SubNavbar from "../SubNavbar/SubNavbar";
 import { Login } from "../LoginButton/LoginButton";
 
-export const NavBar = () => {
+export const NavBarDesktop = ({ setNameProductSearch }: any) => {
   const [showSubNavBar, setShowSubNavBar] = useState(false);
 
   return (

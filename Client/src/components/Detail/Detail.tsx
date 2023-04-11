@@ -1,4 +1,3 @@
-import { NavBar } from "../NavBar/NavBar";
 import { Rating } from "../Rating/Rating";
 import { DetailCarousel } from "./DetailCarousel";
 import { useParams } from "react-router-dom";
@@ -20,7 +19,6 @@ export const Detail = () => {
   const { id }: any = useParams();
   const dispatch = useAppDispatch();
   const game: any = useAppSelector((state) => state.productReducer.details);
-  const [successMsg, setSuccessMsg] = useState(""); // Aramis:Este capaz que ya no ande
   const { user } = useAppSelector(
     (state: RootState) => state.userReducer.currentUser
   );
@@ -47,7 +45,7 @@ export const Detail = () => {
 
   return (
     <>
-      {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
+      {/* {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />} */}
       <div>
         {game.name && (
           <div>
@@ -67,7 +65,6 @@ export const Detail = () => {
                   >
                     Add To Cart
                   </button>
-                  <p>{successMsg}</p>
                 </div>
               </div>
               <div className={styles["right-section"]}>

@@ -1,15 +1,11 @@
 import { Carousel } from "../../components/Carousel/Carousel";
-import { NavBar } from "../../components/NavBar/NavBar";
 import { Product } from "../../components/Product/Product";
 import { Footer } from "../../components/Footer/Footer";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 import { getProductsByFilters } from "../../redux/actions/productAction";
-//import { getShoppingCartUserFromDB } from "../../redux/actions/shoppingCartAction";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.scss";
 import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
-import { Login } from "../../components/LoginButton/LoginButton";
 
 export const Home = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +32,6 @@ export const Home = () => {
 
   return (
     <div className={styles.container}>
-      {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
       <Carousel />
       <h2 className={styles.title}>TOP GAMES</h2>
       <Product />
