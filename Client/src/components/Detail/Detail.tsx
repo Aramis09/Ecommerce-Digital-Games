@@ -7,25 +7,23 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useEffect, useState } from "react";
 import { eraseItemById } from "../../redux/reducer/productReducer";
 import styles from "./Detail.module.scss";
-import { ADDED_TO_CART, ALREADY_IN_THE_CART } from "../../utils/constants";
-import { useAuth0 } from "@auth0/auth0-react";
 import Comments from "./Comments";
 import { checkIfProductWasPurchased } from "../../Controller/cardController";
 import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
-//los import comentados de abajo no los toquen que son para implementar los botones a futuro
-//import { getListGenres } from "../../redux/actions/genresAction";
-//import { getListPlatforms } from "../../redux/actions/platformAction";
+import { RootState } from "../../redux/store";
 
 export const Detail = () => {
   const [changeClass, setChangeClass] = useState({
     classButton: styles.buttonAdd,
     classCard: styles.cardContainer,
   });
-  const { user }: any = useAuth0();
   const { id }: any = useParams();
   const dispatch = useAppDispatch();
   const game: any = useAppSelector((state) => state.productReducer.details);
-  const [successMsg, setSuccessMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState(""); // Aramis:Este capaz que ya no ande
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
 
   useEffect(() => {
     dispatch(getProductByID(parseInt(id)));

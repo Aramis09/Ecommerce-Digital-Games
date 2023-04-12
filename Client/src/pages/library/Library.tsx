@@ -1,4 +1,3 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { getProductsOfLibraryById } from "../../Controller/LibraryController";
@@ -6,10 +5,14 @@ import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
 import styles from "./Library.module.scss";
 import CardLibrary from "../../components/LibraryCard/LibraryCard";
 import { ProductsType } from "../../types";
+import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/hooks/hooks";
 
 const Library = () => {
-  const { user } = useAuth0();
   const [products, setProducts] = useState<ProductsType[]>([]);
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
 
   useEffect(() => {
     if (user?.email) {

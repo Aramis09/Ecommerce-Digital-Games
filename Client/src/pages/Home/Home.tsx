@@ -8,9 +8,8 @@ import { getProductsByFilters } from "../../redux/actions/productAction";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.scss";
-import SubNavbar from "../../components/SubNavbar/SubNavbar";
 import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
-//import { useAuth0 } from "@auth0/auth0-react";
+import { Login } from "../../components/LoginButton/LoginButton";
 
 export const Home = () => {
   const dispatch = useAppDispatch();

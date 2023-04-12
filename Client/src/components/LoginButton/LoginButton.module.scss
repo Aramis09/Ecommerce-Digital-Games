@@ -1,0 +1,29 @@
+@media (min-width:320px) and (max-width:960px){
+    .loginButton {
+        // background-color: #018dff;
+        cursor: pointer;
+        border-radius: 20px;
+        border-color: white;
+        margin-right: 5px;
+    }
+    
+    .loginButton:hover {
+        background-color: #004074;
+        transition: 1s;
+        color: #018dff;
+    }
+    @media (min-width:961px){
+        .loginButton {
+            border: none;
+            background-color: rgba($color: #000000, $alpha: 0);
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .loginButton:hover {
+            border: none;
+            background-color: rgba($color: #000000, $alpha: 0);
+            color: #891ca7;
+            transition: 1s;
+        }
+    }
+}

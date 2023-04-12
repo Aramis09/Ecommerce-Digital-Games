@@ -9,32 +9,22 @@ import {
 } from "../../redux/actions/shoppingCartAction";
 import { RootState } from "../../redux/store";
 import { ShoppingCartType } from "../../redux/interfaces/shoppingCartInterface";
+import { Login } from "../LoginButton/LoginButton";
 
 export const ShoppingCartItem = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated, loginWithRedirect }: any = useAuth0();
-  const [productList, setproductList] = useState<ShoppingCartType[]>([]);
   const productsInShoopingCart = useAppSelector(
     (state: RootState) => state.shoppingCartReducer.productListShoopingCart
   );
-  //AramisWarning: Esto esta haciendo un bucle infinito
-  useEffect(() => {
-    if (user && productList.length !== productsInShoopingCart.length) {
-      // AramisWarning: tengo que mejorar esta condicion, soluciona el bucle infinito pero no todo
-      dispatch(getProductSoppingCart(user.email));
-      setproductList(productsInShoopingCart);
-      return;
-    }
-    setproductList(productsInShoopingCart);
-  }, [productsInShoopingCart]); // productsInShoopingCart tengo que ver porque esta dependencia se me hace el bucle infinito
 
   return (
     <>
-      {productList.length ? (
+      {productsInShoopingCart.length ? (
         <div>
           <table className={style.table}>
             <tbody className={style.tbody}>
-              {productList.map((item: any, index) => (
+              {productsInShoopingCart.map((item: any, index) => (
                 <tr key={index}>
                   <td className={style.item}> {item.name}</td>
                   <td className={style.item}> ${item.price}</td>
@@ -60,19 +50,13 @@ export const ShoppingCartItem = (): JSX.Element => {
           </table>
           {}
           <button className={style.checkout}>
-            {isAuthenticated ? (
-              <Link to="/checkout">
-                <p>CHECKOUT</p>
-              </Link>
-            ) : (
-              <p onClick={() => loginWithRedirect()}>Please LogIn</p>
-            )}
+            <Login from="shoopingCart" />
           </button>
         </div>
       ) : (
         <div>
           <div>
-            <p className={style.cartClean}>Empty Shopping Car</p>
+            <p className={style.cartClean}>Empty Shopping Cart</p>
           </div>
         </div>
       )}

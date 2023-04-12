@@ -1,19 +1,20 @@
 import { useAppSelector, useAppDispatch } from "../../../redux/hooks/hooks";
-import { addFriend, confFriend } from "../../../redux/actions/friendAction";
-import { useEffect, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { useState } from "react";
 import styles from "./addFriends.module.scss";
+import { RootState } from "../../../redux/store";
+import { addNewFriend } from "../../../Controller/FriendsController";
 
-export const AddiFriend = () => {
+export const InputAddFriend = () => {
   const dispatch = useAppDispatch();
-  const { user }: any = useAuth0();
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const [emailFriendFromInput, setEmailFriendFromInput] = useState("");
 
-  const handlerAddFriend = (event: any) => {
+  const handlerAddFriend = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const emailUser = user?.email;
-    if (event.keyCode === 13) {
-      dispatch(addFriend(emailUser, emailFriendFromInput));
-      dispatch(confFriend(user?.email));
+    if (event.key === "Enter" && user && emailUser) {
+      addNewFriend(emailUser, emailFriendFromInput);
       setEmailFriendFromInput("");
     }
   };

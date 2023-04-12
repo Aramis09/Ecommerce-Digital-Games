@@ -2,14 +2,16 @@ import { Link } from "react-router-dom";
 import styles from "./SubNavBar.module.scss";
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { useAuth0 } from "@auth0/auth0-react";
 import { getListUsers } from "../../redux/actions/userAction";
+import { RootState } from "../../redux/store";
 const SubNavbarPhone = (flags: any) => {
   const dispatch = useAppDispatch();
-  const { user } = useAuth0();
   const [changeClass, setChangeClass] = useState({
     classContainer: styles.containerHide,
   });
+  const { user } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const userEmail = user?.email;
   const listUsersData = useAppSelector(
     (state) => state.userReducer.listUsersData

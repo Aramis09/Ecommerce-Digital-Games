@@ -24,9 +24,25 @@ export interface DataUser {
   secret:string
 
 }
+interface UserType {
+  given_name:string
+  family_name:string
+  nickname:string
+  name:string
+  locale:string
+  picture:string
+  updated_at:string
+  email:string
+  email_verified:boolean
+  sub:string
+}
+interface CurrentUserType {
+  isAuthenticated:boolean
+  user:UserType
+}
 export interface UsersReducerState{
   listUsersData: DataUser[],
-  currentUser:{} // AramisWork: tengo que definir que es esto.
+  currentUser:CurrentUserType | {user:null,isAuthenticated:null} // AramisWork: tengo que definir que es esto.
   idDetails: object,
   successMsg: string,
   errorMsg: string

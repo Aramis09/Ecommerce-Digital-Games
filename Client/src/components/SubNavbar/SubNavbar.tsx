@@ -3,15 +3,17 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./SubNavbar.module.scss";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { useAuth0 } from "@auth0/auth0-react";
 import { getListUsers } from "../../redux/actions/userAction";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
+import { RootState } from "../../redux/store";
 const SubNavbar = (state: any) => {
   const [changeClass, setChangeClass] = useState({
     class: styles.containerShow,
   });
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated } = useAppSelector(
+    (state: RootState) => state.userReducer.currentUser
+  );
   const userEmail = user?.email;
   const listUsersData = useAppSelector(
     (state) => state.userReducer.listUsersData
