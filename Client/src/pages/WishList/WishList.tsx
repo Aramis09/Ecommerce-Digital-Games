@@ -1,5 +1,4 @@
 import react, { useEffect } from "react";
-import { NavBar } from "../../components/NavBar/NavBar";
 import { getAllProductInWishList } from "../../redux/actions/wishActions";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { RootState } from "../../redux/store";
@@ -24,7 +23,6 @@ const WishList = () => {
 
   return (
     <>
-      {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
       {wishListStore.length ? (
         <section className={styles.container}>
           <p className={styles.top}>WhisList</p>

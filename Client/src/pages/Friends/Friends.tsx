@@ -1,4 +1,3 @@
-import { NavBar } from "../../components/NavBar/NavBar";
 import { InputAddFriend } from "./InputAddFriend/InputAddFriend";
 import { PendingFriends } from "./PendingFriends/PendingFriends";
 import { FriendsList } from "./FriendList/FriendsList";
@@ -15,7 +14,6 @@ export const Friends = () => {
 
   return (
     <div>
-      {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
       <div className={styles.container}>
         <div className={styles.containerPendings}>
           <InputAddFriend />

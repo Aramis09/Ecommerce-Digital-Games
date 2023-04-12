@@ -1,10 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import style from "./LoginButton.module.scss";
 import { Link } from "react-router-dom";
-interface Login {
+interface LoginType {
   from: string;
 }
-export const Login = ({ from }: Login) => {
+export const Login = ({ from }: LoginType): JSX.Element => {
   const { loginWithRedirect, logout, isAuthenticated, getAccessTokenSilently } =
     useAuth0();
   const saveToken = (getAccessTokenSilently: string) => {

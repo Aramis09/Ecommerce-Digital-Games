@@ -23,6 +23,20 @@ const getAllProducts = async () =>{
     return productListClean;
 };
 
+const getFirstBestThreeProduct = async (QuantityProducts) => {
+    try {
+        let productsListWithMoreTrash = await Product.findAll({
+            order: [['rating', 'DESC']],
+            include:arrayIncludes,
+            limit: QuantityProducts,
+        });
+        let productsListWithTrash=await productsListWithMoreTrash.map(productWithTrash => productWithTrash.dataValues);
+        let productListClean = cleaningProcess( await productsListWithTrash);
+        return productListClean;
+    } catch (error) {
+        return {error:error.message};
+    }
+};
 const getProductById = async id =>{
     if (!id) throw Error("Error: Debe existir un valor ID, ID=null..!");
     try {
@@ -74,7 +88,7 @@ const getProductsByPlatform = async (arrayPlatforms) => {
 
 const getProductsByCategory = async (name,filters,order,pageNumber) => {
     const arrayOrder=[]
-    let pageSize = 15; // cantidad de elementos por página
+    let pageSize = 8; // cantidad de elementos por página
     let offset = (pageNumber - 1) * pageSize;
     if (order.alphabetic) arrayOrder.push(["name",order.alphabetic])
     if (order.price) arrayOrder.push(["price",order.price])
@@ -325,4 +339,4 @@ function alphabeticalOrderZA(a,b){
     if( frst > second ) return -1;
      if( frst < second) return 1;
 };
-module.exports = {  checkProductInDb,getAllProducts, getProductById, getProductsByName, getOrderAlphabeticalList, getProductsByPlatform, getProductsByCategory,getListProductsBuy};
+module.exports = {  getFirstBestThreeProduct,checkProductInDb,getAllProducts, getProductById, getProductsByName, getOrderAlphabeticalList, getProductsByPlatform, getProductsByCategory,getListProductsBuy};

@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { getListUsers } from "../../redux/actions/userAction";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 import { RootState } from "../../redux/store";
+
 const SubNavbar = (state: any) => {
   const [changeClass, setChangeClass] = useState({
     class: styles.containerShow,
@@ -26,6 +27,7 @@ const SubNavbar = (state: any) => {
     })();
   }, [state]);
 
+  //Aramis:Esto lo hice yo y no se que miercoles hace.
   useEffect(() => {
     dispatch(getListUsers());
   }, []);
@@ -45,7 +47,6 @@ const SubNavbar = (state: any) => {
             Library
           </Link>
           <Link to="/wish" className={styles.buttons}>
-            {" "}
             Wish
           </Link>
           <Link to="/friends" className={styles.buttons}>

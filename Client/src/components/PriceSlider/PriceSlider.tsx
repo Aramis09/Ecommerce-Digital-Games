@@ -1,25 +1,20 @@
 import styles from "./PriceSlider.module.scss";
-import { useState, useEffect } from "react";
-import { useAppDispatch } from "../../redux/hooks/hooks";
-import { selectedFilterPriceRange } from "../../redux/reducer/productReducer";
-
-export const PriceSlider = () => {
+import { useState } from "react";
+interface PriceSliderTypes {
+  sendUpPriceRange: (newPriceRange: number[]) => void;
+}
+export const PriceSlider = ({
+  sendUpPriceRange,
+}: PriceSliderTypes): JSX.Element => {
   const [priceRange, setPriceRange] = useState([0, 100]);
-  const [lowLimit, setLowLimit] = useState();
-  const [highLimit, setHighLimit] = useState();
-
-  const dispatch = useAppDispatch();
 
   const handlePriceRangeChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newPriceRange = [event.target.valueAsNumber, priceRange[1]];
     setPriceRange(newPriceRange);
+    sendUpPriceRange(newPriceRange);
   };
-
-  useEffect(() => {
-    dispatch(selectedFilterPriceRange(priceRange));
-  }, [priceRange]);
 
   return (
     <div>
