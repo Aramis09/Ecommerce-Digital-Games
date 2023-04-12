@@ -1,42 +1,19 @@
-import { useState, useEffect } from "react";
-import { useAppDispatch } from "../../redux/hooks/hooks";
-import { searchName } from "../../redux/reducer/productReducer";
-import { getProductsByFilters } from "../../redux/actions/productAction";
 import style from "./SearchBar.module.scss";
 import iconSearch from "./images/icon_search.png";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks/hooks";
 
-export const SearchBar = (flag: any) => {
-  const [Search, setSearch] = useState("");
+export const SearchBar = () => {
+  //temgo que hacer las actions para mandar la busqueda.
   const dispatch = useAppDispatch();
-
-  const handleClickSubmit = (event: any) => {
-    event.preventDefault();
-    dispatch(searchName(Search));
-    dispatch(
-      getProductsByFilters(
-        //NO TOCAR
-        {
-          name: Search,
-          filters: {
-            genres: [],
-            platform: [],
-            priceRange: [0, 100],
-          },
-          order: {
-            alphabetic: "",
-            price: "",
-          },
-        },
-        1
-      )
-    );
-  };
+  const [searchValue, setSearchValue] = useState("");
   const handleInputChange = (event: any) => {
-    event.preventDefault();
-    setSearch(event.target.value);
+    setSearchValue(event.target.value);
   };
-
+  const hanlderSendValue = () => {
+    dispatch(searchProductByName(searchValue)); // tengo que preparar y mandar la action
+  };
   return (
     <div className={style.containerSearch}>
       <input
@@ -46,11 +23,7 @@ export const SearchBar = (flag: any) => {
         onChange={(event) => handleInputChange(event)}
       />
 
-      <button
-        className={style.But}
-        type="submit"
-        onClick={(event) => handleClickSubmit(event)}
-      >
+      <button className={style.But} onClick={() => hanlderSendValue()}>
         <Link to="/products">
           <img className={style.iconSearch} src={iconSearch} alt="iconSearch" />
         </Link>

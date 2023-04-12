@@ -74,7 +74,10 @@ export const Products = () => {
           <p>Cargando</p>
         )}
       </div>
-      <PaginateProducts changePageHanlder={changePageHanlder} />
+      <PaginateProducts
+        changePageHanlder={changePageHanlder}
+        setProductList={setProductList}
+      />
     </div>
   );
 };

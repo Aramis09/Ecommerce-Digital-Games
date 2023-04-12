@@ -7,9 +7,8 @@ import icon from "./images/icon.png";
 import SubNavbar from "../SubNavbar/SubNavbar";
 import { Login } from "../LoginButton/LoginButton";
 
-export const NavBarDesktop = ({ setNameProductSearch }: any) => {
+export const NavBarDesktop = () => {
   const [showSubNavBar, setShowSubNavBar] = useState(false);
-
   return (
     <nav className={style.mainContainer}>
       <div className={style.listContainer}>

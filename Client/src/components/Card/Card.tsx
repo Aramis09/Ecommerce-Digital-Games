@@ -73,13 +73,13 @@ export const Card = ({
           {state ? (
             <Link to={`/${id}`}>
               <ImageLazyLoad url={background_image} />
-              {/* <img src={background_image} alt={name} /> */}
+              {/* <img src={background_image} alt={name} loading="lazy" /> */}
             </Link>
           ) : (
             <>
               <Link to={"/products"}>
                 <ImageLazyLoad url={background_image} />
-                {/* <img src={background_image} alt={name} /> */}
+                {/* <img src={background_image} alt={name} loading="lazy" /> */}
               </Link>
             </>
           )}

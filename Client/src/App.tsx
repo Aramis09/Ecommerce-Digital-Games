@@ -9,11 +9,6 @@ import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "./redux/hooks/hooks";
 import { getListUsers, saveNewUser } from "./redux/actions/userAction";
-import {
-  getTopRatedProducts,
-  setGlobalDiscount,
-} from "./redux/actions/productAction";
-import { setAutoGlobalDiscount } from "./redux/reducer/productReducer";
 import { DashboardUser } from "./components/Dashboard/Users/DashboardUser";
 import { DashboardProducts } from "./components/Dashboard/ProductsList/DashboardProducts";
 import WishList from "./pages/WishList/WishList";
@@ -34,12 +29,7 @@ function App() {
   const listUsersData = useAppSelector(
     (state) => state.userReducer.listUsersData
   );
-  let discountGloballyApplied = useAppSelector(
-    (state) => state.productReducer.discountGloballyApplied
-  );
-  let adminDiscount = useAppSelector(
-    (state) => state.productReducer.adminDiscount
-  );
+
   console.log("para borrar");
   const admin = listUsersData.find((item) => item.email === userEmail);
 
@@ -53,23 +43,15 @@ function App() {
   }, [user]);
 
   useEffect(() => {
-    dispatch(getTopRatedProducts());
     dispatch(getListUsers());
   }, []);
-
-  useEffect(() => {
-    if (!discountGloballyApplied && !adminDiscount) {
-      dispatch(setGlobalDiscount());
-      dispatch(setAutoGlobalDiscount(true));
-    }
-  }, [discountGloballyApplied]);
 
   useEffect(() => {
     if (user !== undefined) {
       dispatch(saveNewUser(user.email, user.name, user.picture));
     }
   }, [user]);
-
+  console.log(nameProductSearch, "App Js");
   return (
     <BrowserRouter>
       <div className="App">

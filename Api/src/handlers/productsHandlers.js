@@ -1,4 +1,4 @@
-const { checkProductInDb, getAllProducts, getProductById, getProductsByName, getOrderAlphabeticalList, getProductsByPlatform, getProductsByCategory,getListProductsBuy } = require("../controllers/products/productsControllers");
+const { getFirstBestThreeProduct,checkProductInDb, getAllProducts, getProductById, getProductsByName, getOrderAlphabeticalList, getProductsByPlatform, getProductsByCategory,getListProductsBuy } = require("../controllers/products/productsControllers");
 
 const productsList = async (req,res)=>{
     const { name }= req.query;
@@ -40,6 +40,16 @@ const productOrder = async (req,res) =>{
     }
 };
 
+const getFirstBestProduct = async (req,res) =>{
+    try {
+        const {QuantityProducts} = req.query;
+        const bestThreeFirstProduct = await getFirstBestThreeProduct(QuantityProducts);
+        if(bestThreeFirstProduct.error) throw new Error("server is dead")
+        return res.status(200).json(bestThreeFirstProduct);
+    } catch (error) {
+        res.status(400).json({error:error.message});
+    }
+};
 const productsListByPlatforms = async (req,res)=>{
     const { arrayPlatforms }= req.body;
     try {
@@ -82,4 +92,4 @@ const checkIfProductWasBought =  async (req,res)=>{
 };
 
 
-module.exports = {checkIfProductWasBought, productsList, productID, productOrder, productsListByPlatforms, productsListByCategory,productsBuyList };
+module.exports = {getFirstBestProduct,checkIfProductWasBought, productsList, productID, productOrder, productsListByPlatforms, productsListByCategory,productsBuyList };
