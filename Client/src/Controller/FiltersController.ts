@@ -11,7 +11,6 @@ export const getProductsFiltered = async ({filters ,pageNumber}:params):Promise<
       const listProducts:Game[] = (await axios.post(`${LIST_PRODUCTS_BY_FILTERS}?pageNumber=${pageNumber}`, filters)).data;
       console.log("entramos a products y cargamos -----------------");
       return listProducts
-      
     }catch(error){
       console.log("Ocurrio un error...intentelo mas tarde, controller Filters");
   }

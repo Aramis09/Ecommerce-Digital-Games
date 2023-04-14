@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { inititalStateFilters } from '../components/Filters/until';
 interface customHookPaginate {
   key:string
   asynchronousFunction:any
@@ -14,6 +15,7 @@ function verifyPageInLocalStorage(key:string,pageNumber:number) {
 } 
 
 export const useNavigatePaginate = ({key,asynchronousFunction,paramsFunction}:customHookPaginate) => {
+  const [paramsSaveHook,setParamsSaveHook] = useState(paramsFunction); 
   const [page, setPage] = useState<any>(() => {
    try {
     //Aramis: Esto lo que hace es ver si existe algo guardado en L.S, si hay algo entonces obtenemos lo de la primera pagina
@@ -25,12 +27,14 @@ export const useNavigatePaginate = ({key,asynchronousFunction,paramsFunction}:cu
      console.error(error)
    }
   })
+
   useEffect(()=>{
     try {
       if(asynchronousFunction && !page.length) {
-        //Aramis:Trae los primeros productos cuando el componente se monta.
-        paramsFunction["pageNumber"] = 1
-        asynchronousFunction(paramsFunction).then((firstPage:any) => {
+        //Aramis:Trae y guarda los primeros productos cuando el componente se monta.
+        paramsSaveHook["pageNumber"] = 1
+        console.log(paramsSaveHook,"useEffect")
+        asynchronousFunction(paramsSaveHook).then((firstPage:any) => {
           const pages = [firstPage] 
           window.localStorage.setItem(key,JSON.stringify(pages))
           setPage(firstPage)})
@@ -38,7 +42,7 @@ export const useNavigatePaginate = ({key,asynchronousFunction,paramsFunction}:cu
     } catch (error) {
       console.error(error)
     }
-  },[])
+  },[paramsSaveHook])
 
   const nextPaginate = async (pageNumber:number) => {
     const isPageSaved = verifyPageInLocalStorage(key,pageNumber) 
@@ -46,10 +50,9 @@ export const useNavigatePaginate = ({key,asynchronousFunction,paramsFunction}:cu
        setPage(isPageSaved)
        return
     }
-    paramsFunction["pageNumber"] = pageNumber
-    asynchronousFunction(paramsFunction).then((newPage:any) => {
+    paramsSaveHook["pageNumber"] = pageNumber;
+    asynchronousFunction(paramsSaveHook).then((newPage:any) => {
       //Aramis: estas dos lineas de abajo podria hacerlas como un general de todo el hook o una funcion
-      console.log("ghjasghjasghjghjasghjagjhsdhjgasdhj")
       const savedPagesJson = window.localStorage.getItem(key)
       const savedPages = savedPagesJson &&  JSON.parse(savedPagesJson)
       savedPages[pageNumber] = newPage
@@ -57,5 +60,11 @@ export const useNavigatePaginate = ({key,asynchronousFunction,paramsFunction}:cu
       setPage(newPage)
     })
   };
-  return [page,setPage,nextPaginate]
+  const modifyParams = (newParamsFunction:any)=> {
+    console.log(newParamsFunction)
+    window.localStorage.removeItem(key)
+    setPage([])
+    setParamsSaveHook(newParamsFunction)
+  } 
+  return [page,setPage,nextPaginate,modifyParams]
 }

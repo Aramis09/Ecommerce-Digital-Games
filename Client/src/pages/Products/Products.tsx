@@ -18,11 +18,12 @@ export const Products = () => {
   const [filters, setFilters] =
     useState<filtersGeneralType>(inititalStateFilters);
 
-  const [productList, setProductList, nextPaginate] = useNavigatePaginate({
-    key: "productsPaginate",
-    asynchronousFunction: getProductsFiltered,
-    paramsFunction: { filters: inititalStateFilters },
-  });
+  const [productList, setProductList, nextPaginate, modifyParams] =
+    useNavigatePaginate({
+      key: "productsPaginate",
+      asynchronousFunction: getProductsFiltered,
+      paramsFunction: { filters: inititalStateFilters },
+    });
 
   const getProductsWithConditions = (
     // Capaz que pueda mejorar este parametro currentPage poniendo un valor por defecto
@@ -30,22 +31,15 @@ export const Products = () => {
     currentPage: number = 1
   ) => {
     setFilters(filters);
-    getProductsFiltered({ filters, pageNumber: currentPage }).then(
-      (productList) => productList && setProductList(productList)
-    );
-
-    // currentPage
-    // ? getProductsFiltered({ filters, pageNumber: currentPage }).then(
-    //     (productList) => productList && setProductList(productList)
-    //   )
-    // : getProductsFiltered({ filters, pageNumber: 1 }).then(
-    //     (productList) => productList && setProductList(productList)
-    //   );
+    modifyParams({ filters });
+    // getProductsFiltered({ filters, pageNumber: currentPage }).then(
+    //   (productList) => productList && setProductList(productList)
+    // );
   };
 
   const changePageHanlder = (ev: any) => {
     const currentPageNumber: number = Number(ev.target.value);
-    // getProductsWithConditions(filters, currentPageNumber);
+    //getProductsWithConditions(filters, currentPageNumber);
     nextPaginate(currentPageNumber);
   };
 
