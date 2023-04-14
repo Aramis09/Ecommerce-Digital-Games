@@ -4,14 +4,16 @@ import { useState } from "react";
 import { useEffect } from "react";
 import styles from "./Product.module.scss";
 import { getFirstBestProducts } from "../../Controller/CarrouselController";
+import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
 
 export const Product = () => {
-  const [topProductsData, setTopProductsData] = useState<Game[]>([]);
-  useEffect((): any => {
-    getFirstBestProducts(6).then(
-      (threeProducts) => threeProducts && setTopProductsData(threeProducts)
-    );
-  }, []);
+  // const [topProductsData, setTopProductsData] = useState<Game[]>([]);
+  const [topProductsData, setTopProductsData] = useLocalStorage(
+    "productsHome",
+    [],
+    getFirstBestProducts,
+    6
+  );
 
   return (
     <div

@@ -6,15 +6,22 @@ import buttonIcon3 from "../../assets/circle-3-filled.svg";
 import styles from "./Carousel.module.scss";
 import { Game } from "../../types";
 import { getFirstBestProducts } from "../../Controller/CarrouselController";
+import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
 
 export const Carousel = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const [bestThreeProducts, setBestThreeProducts] = useState<Game[]>([]);
-  useEffect(() => {
-    getFirstBestProducts(3).then(
-      (threeProducts) => threeProducts && setBestThreeProducts(threeProducts)
-    );
-  }, []);
+  // const [bestThreeProducts, setBestThreeProducts] = useState<Game[]>([]);
+  const [bestThreeProducts, setBestThreeProducts] = useLocalStorage(
+    "productsHome",
+    [],
+    getFirstBestProducts,
+    6
+  );
+  // useEffect(() => {
+  //   getFirstBestProducts(3).then(
+  //     (threeProducts) => threeProducts && setBestThreeProducts(threeProducts)
+  //   );
+  // }, []);
 
   return (
     <>
