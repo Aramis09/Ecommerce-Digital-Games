@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { listUser, userByID, errorMsg, setDataCurrentUser,  } from "../reducer/userReducer";
+import { listUser, userByID, errorMsg } from "../reducer/userReducer";
 import { LIST_USERS, ADD_NEW_USER } from "../../utils/constants";
 import { DataUser } from '../interfaces/userInterface';
 
@@ -14,15 +14,15 @@ export const getListUsers =  () => async (dispatch: any) => {
 }
 
 //Aramis:esto no se usa y por eso no esta tipado.
-export const getUserByID =  (id: string) => async (dispatch: any) => {
-    let user: {};
-    try{
-        user = await  (await axios.get(LIST_USERS + id)).data; 
-        dispatch(userByID(user));
-    }catch(error){
-        dispatch(errorMsg("Ocurrio un error...intentelo mas tarde"));
-    }
-}
+// export const getUserByID =  (id: string) => async (dispatch: any) => {
+//     let user: {};
+//     try{
+//         user = await  (await axios.get(LIST_USERS + id)).data; 
+//         dispatch(userByID(user));
+//     }catch(error){
+//         dispatch(errorMsg("Ocurrio un error...intentelo mas tarde"));
+//     }
+// }
 
 //crear y agregar usuario nuevo
 //Aramis: Esto no deberia ser  una action si no se lo usa de forma global.

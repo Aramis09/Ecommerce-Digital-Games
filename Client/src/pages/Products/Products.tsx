@@ -64,6 +64,7 @@ export const Products = () => {
                   id={item.id}
                   key={index}
                   name={item.name}
+                  images={item.images}
                   background_image={item.background_image}
                   price={item.price}
                   genres={item.genres}

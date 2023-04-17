@@ -14,10 +14,11 @@ import "primeicons/primeicons.css";
 
 import { Rating, RatingChangeEvent } from "primereact/rating";
 import { RootState } from "../../redux/store";
-
-const Comments = () => {
+interface commentsType {
+  id: number;
+}
+const Comments = ({ id }: commentsType): JSX.Element => {
   //Estado Global
-  const game: any = useAppSelector((state) => state.productReducer.details);
   const { user } = useAppSelector(
     (state: RootState) => state.userReducer.currentUser
   );
@@ -31,7 +32,7 @@ const Comments = () => {
 
   const sendCommentHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    postComment(game, userComment, user, stars).then(
+    postComment({ id, userComment, user, stars }).then(
       (newCommentObject: any) => {
         setAllComments(newCommentObject);
         setComment("");
@@ -40,7 +41,7 @@ const Comments = () => {
   };
 
   useEffect(() => {
-    getAllProductComments(game).then((allCommentsObject: any) =>
+    getAllProductComments({ id }).then((allCommentsObject: any) =>
       setAllComments(allCommentsObject)
     );
     dispatch(getListUsers());

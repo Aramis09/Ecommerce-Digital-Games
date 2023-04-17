@@ -5,16 +5,16 @@ import { useEffect } from "react";
 import styles from "./Product.module.scss";
 import { getFirstBestProducts } from "../../Controller/CarrouselController";
 import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
+import { useCarrousel } from "../../CustomHooks/useCarrousel";
 
-export const Product = () => {
-  // const [topProductsData, setTopProductsData] = useState<Game[]>([]);
+export const Product = ({ setProductsCarrousel }: any) => {
   const [topProductsData, setTopProductsData] = useLocalStorage(
     "productsHome",
     [],
     getFirstBestProducts,
     6
   );
-
+  useCarrousel({ setProductsCarrousel, topProductsData });
   return (
     <div
       className={
@@ -29,6 +29,7 @@ export const Product = () => {
                 key={index}
                 id={product.id}
                 name={product.name}
+                images={product.images}
                 background_image={product.background_image}
                 genres={product.genres}
                 price={product.price}

@@ -1,27 +1,34 @@
 import axios from "axios";
 import { Comment } from "../types";
-
-export const getAllProductComments = async (game: any) => {
+interface getCommentsType {
+  id: number;
+}
+interface postComment extends getCommentsType {
+  userComment: string;
+  user: any;
+  stars: number;
+}
+export const getAllProductComments = async ({ id }: getCommentsType) => {
   const productComments = await axios.get(
-    `http://localhost:3001/user/commentProduct?productId=${game.id}`
+    `http://localhost:3001/user/commentProduct?productId=${id}`
   ); //productComments.data => [ {Comment: '' , date:'', id:number , productId:number, userId}, {…}, {…}, … ]
   const allCommentsObject: Comment = await productComments.data;
   return allCommentsObject;
 };
 
-export const postComment = async (
-  game: any,
-  userComment: string,
-  user: any,
-  stars: number
-) => {
+export const postComment = async ({
+  id,
+  userComment,
+  user,
+  stars,
+}: postComment) => {
   //Para enviar por body
   const email = user?.email;
   const image = user?.picture;
 
   const data = {
     email,
-    productId: game.id,
+    productId: id,
     comment: userComment,
     date: String(new Date()).slice(0, 21),
     image,
@@ -33,6 +40,6 @@ export const postComment = async (
     url: "http://localhost:3001/user/newComment",
     data,
   });
-  const newCommentObject = await getAllProductComments(game);
+  const newCommentObject = await getAllProductComments({ id });
   return newCommentObject;
 };

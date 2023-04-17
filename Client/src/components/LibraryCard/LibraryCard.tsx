@@ -1,5 +1,5 @@
+import { PropsCardLibrary } from "../../types";
 import styles from "./LibraryCard.module.scss";
-import { PropsCardLibrary } from "../../pages/library/LibraryInterfaces";
 import { Link } from "react-router-dom";
 
 const CardLibrary = (productData: PropsCardLibrary) => {

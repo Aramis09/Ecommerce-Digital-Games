@@ -18,6 +18,7 @@ export const Card = ({
   background_image,
   price,
   genres,
+  images,
   state,
 }: CardPropsType) => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ export const Card = ({
   }, []);
 
   const addProductToWishListHanlder = async () => {
-    const newWishList = await addProductToWishList(user.email, id);
+    const newWishList = user && (await addProductToWishList(user.email, id));
     dispatch(setwishList(newWishList));
   };
 
@@ -60,26 +61,24 @@ export const Card = ({
             name,
             background_image,
             price,
+            images,
             genres,
             state,
           })
     );
   };
-
   return (
     <>
       <div className={changeClass.classCard}>
         <div className={styles.card}>
           {state ? (
             <Link to={`/${id}`}>
-              {/* <ImageLazyLoad url={background_image} /> */}
-              <img src={background_image} alt={name} loading="lazy" />
+              <ImageLazyLoad url={images[0]} />
             </Link>
           ) : (
             <>
               <Link to={"/products"}>
-                {/* <ImageLazyLoad url={background_image} /> */}
-                <img src={background_image} alt={name} loading="lazy" />
+                <ImageLazyLoad url={images[0]} />
               </Link>
             </>
           )}
@@ -98,6 +97,7 @@ export const Card = ({
                   >
                     Add To Cart
                   </button>
+                  {/* Esto se podria hacer un componente */}
                   {isAuthenticated === true && (
                     <button
                       className={changeClass.classButton}

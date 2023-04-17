@@ -10,7 +10,7 @@ import { RootState } from "../../redux/store";
 import { Game } from "../../types";
 import { getProductByID } from "../../Controller/DetailController";
 
-export const Detail = () => {
+export const Detail = (): JSX.Element => {
   const [porductDetail, setProductDetail] = useState<Game | false>(false);
   const [changeClass, setChangeClass] = useState({
     classButton: styles.buttonAdd,
@@ -57,7 +57,7 @@ export const Detail = () => {
                 <div key={porductDetail.id}>
                   <h3>{porductDetail.name}</h3>
                   <p>${porductDetail.price}</p>
-                  <Rating value={porductDetail.rating} size={24} />
+                  <Rating value={Number(porductDetail.rating)} size={24} />
                   <button
                     className={changeClass.classButton}
                     type="button"
@@ -88,7 +88,7 @@ export const Detail = () => {
               </div>
             </section>
             <DetailCarousel images={porductDetail.images} />
-            <Comments />
+            <Comments id={id} />
           </div>
         )}
       </div>
