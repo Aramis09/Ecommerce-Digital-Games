@@ -3,6 +3,7 @@ import iconSearch from "./images/icon_search.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks/hooks";
+import { setPorductSearchName } from "../../redux/reducer/productReducer";
 
 export const SearchBar = () => {
   //temgo que hacer las actions para mandar la busqueda.
@@ -12,7 +13,7 @@ export const SearchBar = () => {
     setSearchValue(event.target.value);
   };
   const hanlderSendValue = () => {
-    dispatch(searchProductByName(searchValue)); // tengo que preparar y mandar la action
+    dispatch(setPorductSearchName(searchValue)); // tengo que preparar y mandar la action
   };
   return (
     <div className={style.containerSearch}>

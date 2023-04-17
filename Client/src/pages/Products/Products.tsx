@@ -1,6 +1,6 @@
 import { Filters, filtersGeneralType } from "../../components/Filters/Filters";
 // import { NavBar } from "../../components/NavBar/NavBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "../../components/Card/Card";
 import styles from "./Products.module.scss";
 import iconFilters from "./images/filter.png";
@@ -9,36 +9,38 @@ import { getProductsFiltered } from "../../Controller/FiltersController";
 import { Game } from "../../types";
 import { inititalStateFilters } from "../../components/Filters/until";
 import { PaginateProducts } from "../../components/PaginateProducts/PaginateProducts";
+import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
+import { useNavigatePaginate } from "../../CustomHooks/useNavigatePaginate";
 
 export const Products = () => {
   const [changeClass, setChangeClass] = useState(false);
-  const [productList, setProductList] = useState<Game[]>([]);
+  // const [productList, setProductList] = useState<Game[]>([]);
   const [filters, setFilters] =
     useState<filtersGeneralType>(inititalStateFilters);
 
-  useEffect(() => {
-    getProductsFiltered(inititalStateFilters, 1).then(
-      (productList) => productList && setProductList(productList)
-    );
-  }, []);
+  const [productList, setProductList, nextPaginate, modifyParams] =
+    useNavigatePaginate({
+      key: "productsPaginate",
+      asynchronousFunction: getProductsFiltered,
+      paramsFunction: { filters: inititalStateFilters },
+    });
 
   const getProductsWithConditions = (
+    // Capaz que pueda mejorar este parametro currentPage poniendo un valor por defecto
     filters: filtersGeneralType,
-    currentPage: number | undefined
+    currentPage: number = 1
   ) => {
     setFilters(filters);
-    currentPage
-      ? getProductsFiltered(filters, currentPage).then(
-          (productList) => productList && setProductList(productList)
-        )
-      : getProductsFiltered(filters, 1).then(
-          (productList) => productList && setProductList(productList)
-        );
+    modifyParams({ filters });
+    // getProductsFiltered({ filters, pageNumber: currentPage }).then(
+    //   (productList) => productList && setProductList(productList)
+    // );
   };
 
   const changePageHanlder = (ev: any) => {
     const currentPageNumber: number = Number(ev.target.value);
-    getProductsWithConditions(filters, currentPageNumber);
+    //getProductsWithConditions(filters, currentPageNumber);
+    nextPaginate(currentPageNumber);
   };
 
   return (
