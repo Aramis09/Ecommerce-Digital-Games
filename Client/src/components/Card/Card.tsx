@@ -85,7 +85,7 @@ export const Card = ({
           )}
           <div className={styles.containerTittleAndPrice}>
             <h3>{name}</h3>
-            <p>{price}</p>
+            <p>{price}$</p>
           </div>
           <div className={styles.addShoppingCart}>
             <div className={styles.containerButton}>
