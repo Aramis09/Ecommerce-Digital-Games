@@ -1,6 +1,6 @@
 import { Filters, filtersGeneralType } from "../../components/Filters/Filters";
 // import { NavBar } from "../../components/NavBar/NavBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "../../components/Card/Card";
 import styles from "./Products.module.scss";
 import iconFilters from "./images/filter.png";
