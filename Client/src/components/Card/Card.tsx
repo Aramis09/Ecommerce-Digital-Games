@@ -72,14 +72,14 @@ export const Card = ({
         <div className={styles.card}>
           {state ? (
             <Link to={`/${id}`}>
-              <ImageLazyLoad url={background_image} />
-              {/* <img src={background_image} alt={name} /> */}
+              {/* <ImageLazyLoad url={background_image} /> */}
+              <img src={background_image} alt={name} loading="lazy" />
             </Link>
           ) : (
             <>
               <Link to={"/products"}>
-                <ImageLazyLoad url={background_image} />
-                {/* <img src={background_image} alt={name} /> */}
+                {/* <ImageLazyLoad url={background_image} /> */}
+                <img src={background_image} alt={name} loading="lazy" />
               </Link>
             </>
           )}

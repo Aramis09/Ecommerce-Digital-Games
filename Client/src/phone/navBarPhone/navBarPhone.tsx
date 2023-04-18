@@ -6,7 +6,7 @@ import icon from "../../components/NavBar/images/icon.png";
 import menu from "./images/menu.png";
 import styles from "./navBarPhone.module.scss";
 import { Link } from "react-router-dom";
-const NavbarPhone = () => {
+const NavbarPhone = ({ setNameProductSearch }: any) => {
   const [flagSubMenu, setMenu] = useState(false);
 
   return (

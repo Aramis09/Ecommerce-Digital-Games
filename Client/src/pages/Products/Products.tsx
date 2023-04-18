@@ -1,64 +1,50 @@
-import { Filters } from "../../components/Filters/Filters";
-import { NavBar } from "../../components/NavBar/NavBar";
-import { useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks/hooks";
-import { getListGenres } from "../../redux/actions/genresAction";
-import { eraseSearchedData } from "../../redux/reducer/productReducer";
+import { Filters, filtersGeneralType } from "../../components/Filters/Filters";
+// import { NavBar } from "../../components/NavBar/NavBar";
+import { useState } from "react";
 import { Card } from "../../components/Card/Card";
 import styles from "./Products.module.scss";
 import iconFilters from "./images/filter.png";
-import { Link } from "react-router-dom";
 import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
-import { style } from "@mui/system";
-import { getProductsByFilters } from "../../redux/actions/productAction";
+import { getProductsFiltered } from "../../Controller/FiltersController";
+import { Game } from "../../types";
+import { inititalStateFilters } from "../../components/Filters/until";
+import { PaginateProducts } from "../../components/PaginateProducts/PaginateProducts";
+import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
+import { useNavigatePaginate } from "../../CustomHooks/useNavigatePaginate";
 
 export const Products = () => {
   const [changeClass, setChangeClass] = useState(false);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [productList, setProductList] = useState<object[]>([]);
-  let searchedData = useAppSelector(
-    (state) => state.productReducer.searchedData
-  );
-  const dispatch = useAppDispatch();
+  // const [productList, setProductList] = useState<Game[]>([]);
+  const [filters, setFilters] =
+    useState<filtersGeneralType>(inititalStateFilters);
 
-  useEffect(() => {
-    dispatch(getListGenres());
+  const [productList, setProductList, nextPaginate, modifyParams] =
+    useNavigatePaginate({
+      key: "productsPaginate",
+      asynchronousFunction: getProductsFiltered,
+      paramsFunction: { filters: inititalStateFilters },
+    });
 
-    return () => {
-      dispatch(eraseSearchedData());
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!productList.length) {
-      dispatch(
-        getProductsByFilters(
-          {
-            name: "",
-            filters: {
-              genres: [],
-              platform: [],
-              priceRange: [0, 100],
-            },
-            order: {
-              alphabetic: "",
-              price: "",
-            },
-          },
-          1
-        )
-      );
-      setProductList(searchedData);
-    }
-  }, [searchedData]);
+  const getProductsWithConditions = (
+    // Capaz que pueda mejorar este parametro currentPage poniendo un valor por defecto
+    filters: filtersGeneralType,
+    currentPage: number = 1
+  ) => {
+    setFilters(filters);
+    modifyParams({ filters });
+    // getProductsFiltered({ filters, pageNumber: currentPage }).then(
+    //   (productList) => productList && setProductList(productList)
+    // );
+  };
 
   const changePageHanlder = (ev: any) => {
-    const currentPageNumber: string = ev.target.value;
-    setPageNumber(Number(currentPageNumber));
+    const currentPageNumber: number = Number(ev.target.value);
+    //getProductsWithConditions(filters, currentPageNumber);
+    nextPaginate(currentPageNumber);
   };
+
   return (
     <div className={styles.containerAll}>
-      {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
       <div className={styles["page-container"]}>
         <img
           className={styles.iconCarrito}
@@ -66,13 +52,14 @@ export const Products = () => {
           alt="soppingCart"
           onClick={() => setChangeClass(!changeClass)}
         />
-        <Filters flag={changeClass} pageNumber={pageNumber} />
-        {searchedData.length && searchedData.length > 0 ? (
-          searchedData.map((item: any, index: number) => {
-            //console.log()(item)
+        <Filters
+          flag={changeClass}
+          updateListProducts={getProductsWithConditions}
+        />
+        {productList.length ? (
+          productList.map((item: any, index: number) => {
             return (
               <div key={index} className={styles.productList}>
-                {/* <Link to={`/${item.id}`}> */}
                 <Card
                   id={item.id}
                   key={index}
@@ -82,7 +69,6 @@ export const Products = () => {
                   genres={item.genres}
                   state={item.state}
                 />
-                {/* </Link> */}
               </div>
             );
           })
@@ -90,26 +76,10 @@ export const Products = () => {
           <p>Cargando</p>
         )}
       </div>
-      <div className={styles.paginate}>
-        <button value="1" onClick={changePageHanlder}>
-          1
-        </button>
-        <button value="2" onClick={changePageHanlder}>
-          2
-        </button>
-        <button value="3" onClick={changePageHanlder}>
-          3
-        </button>
-        <button value="4" onClick={changePageHanlder}>
-          4
-        </button>
-        <button value="5" onClick={changePageHanlder}>
-          5
-        </button>
-        <button value="6" onClick={changePageHanlder}>
-          6
-        </button>
-      </div>
+      <PaginateProducts
+        changePageHanlder={changePageHanlder}
+        setProductList={setProductList}
+      />
     </div>
   );
 };

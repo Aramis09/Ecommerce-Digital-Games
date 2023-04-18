@@ -53,9 +53,11 @@
   }
 
   .img-carousel img {
-    display: none;//AramisWork:Esto esta asi porque es lo que me esta quitando rendimiento en la pagina.
+    // display: none;//AramisWork:Esto esta asi porque es lo que me esta quitando rendimiento en la pagina.
     width: 100%;
     position: absolute;
+    object-fit:cover;
+    object-position: top;
     height: 500px;
     left: 0px;
     top: 0%;

@@ -2,7 +2,6 @@ import { DashboardNav } from "../Nav/DashboardNav";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { getListUsers } from "../../../redux/actions/userAction";
-import { getAllProducts } from "../../../redux/actions/productAction";
 import { EDIT_PRODUCT } from "../../../utils/constants";
 import { Game } from "../../../types";
 import axios from "axios";
@@ -12,6 +11,8 @@ import sendIcon from "../../../assets/send.svg";
 import editIcon from "../../../assets/edit.svg";
 import styles from "./DashboardProducts.module.css";
 import { RootState } from "../../../redux/store";
+import { getProductsFiltered } from "../../../Controller/FiltersController";
+import { inititalStateFilters } from "../../Filters/until";
 
 export const DashboardProducts = () => {
   const [showModal, setShowModal] = useState(false);
@@ -23,10 +24,10 @@ export const DashboardProducts = () => {
   const [newProductPrice, setNewProductPrice] = useState("");
   const [searchProducts, setSearchProducts] = useState("");
   const [newSearch, setNewSearch] = useState<Game[]>([]);
-
-  let listProducts = useAppSelector(
-    (state) => state.productReducer.allProductsData
-  );
+  const [listProducts, setListProducts] = useState<Game[]>([]);
+  // let listProducts = useAppSelector(
+  //   (state) => state.productReducer.allProductsData
+  // );
   let listUsersData = useAppSelector(
     (state) => state.userReducer.listUsersData
   );
@@ -42,8 +43,11 @@ export const DashboardProducts = () => {
   const admin = getAdmins.find((item) => item?.email === user?.email);
 
   const dispatch = useAppDispatch();
+  //AramisWork:Tengo que implementar un paginado en este componente,  ademas tengo que modularizar TODO.
   useEffect(() => {
-    dispatch(getAllProducts());
+    getProductsFiltered(inititalStateFilters, 1).then(
+      (productList) => productList && setListProducts(productList)
+    );
     dispatch(getListUsers());
   }, []);
 

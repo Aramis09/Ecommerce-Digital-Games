@@ -1,32 +1,28 @@
-import { NavBar } from "../NavBar/NavBar";
 import { Rating } from "../Rating/Rating";
 import { DetailCarousel } from "./DetailCarousel";
 import { useParams } from "react-router-dom";
-import { getProductByID } from "../../redux/actions/productAction";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useEffect, useState } from "react";
-import { eraseItemById } from "../../redux/reducer/productReducer";
 import styles from "./Detail.module.scss";
 import Comments from "./Comments";
 import { checkIfProductWasPurchased } from "../../Controller/cardController";
-import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
 import { RootState } from "../../redux/store";
+import { Game } from "../../types";
+import { getProductByID } from "../../Controller/DetailController";
 
 export const Detail = () => {
+  const [porductDetail, setProductDetail] = useState<Game | false>(false);
   const [changeClass, setChangeClass] = useState({
     classButton: styles.buttonAdd,
     classCard: styles.cardContainer,
   });
   const { id }: any = useParams();
-  const dispatch = useAppDispatch();
-  const game: any = useAppSelector((state) => state.productReducer.details);
-  const [successMsg, setSuccessMsg] = useState(""); // Aramis:Este capaz que ya no ande
   const { user } = useAppSelector(
     (state: RootState) => state.userReducer.currentUser
   );
 
+  //Aramis: este useEffect debe de ser un custom hook
   useEffect(() => {
-    dispatch(getProductByID(parseInt(id)));
     if (user) {
       checkIfProductWasPurchased(user.email, id).then((check) =>
         check
@@ -40,26 +36,28 @@ export const Detail = () => {
             })
       );
     }
-    return () => {
-      dispatch(eraseItemById());
-    };
   }, [user]);
 
+  useEffect(() => {
+    getProductByID(id).then((product) => product && setProductDetail(product));
+  }, []);
   return (
     <>
-      {window.innerWidth > 959 ? <NavBar /> : <NavbarPhone />}
       <div>
-        {game.name && (
+        {porductDetail && (
           <div>
             <section className={styles["background-image"]}>
-              <img src={game.background_image} alt={game.name} />
+              <img
+                src={porductDetail.background_image}
+                alt={porductDetail.name}
+              />
             </section>
             <section className={styles["info-container"]}>
               <div className={styles["left-section"]}>
-                <div key={game.id}>
-                  <h3>{game.name}</h3>
-                  <p>${game.price}</p>
-                  <Rating value={game.rating} size={24} />
+                <div key={porductDetail.id}>
+                  <h3>{porductDetail.name}</h3>
+                  <p>${porductDetail.price}</p>
+                  <Rating value={porductDetail.rating} size={24} />
                   <button
                     className={changeClass.classButton}
                     type="button"
@@ -67,26 +65,29 @@ export const Detail = () => {
                   >
                     Add To Cart
                   </button>
-                  <p>{successMsg}</p>
                 </div>
               </div>
               <div className={styles["right-section"]}>
                 <div>
-                  <p className={styles.description}>{game.description}</p>
+                  <p className={styles.description}>
+                    {porductDetail.description}
+                  </p>
                   <div className={styles["right-section-info"]}>
                     <div className={styles["gender-section"]}>
                       <h4>Generos</h4>
                       <div className={styles["button-container"]}>
-                        {game.genres.map((item: any, index: number) => (
-                          <button key={index}>{item}</button>
-                        ))}
+                        {porductDetail.genres.map(
+                          (item: any, index: number) => (
+                            <button key={index}>{item}</button>
+                          )
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </section>
-            <DetailCarousel images={game.images} />
+            <DetailCarousel images={porductDetail.images} />
             <Comments />
           </div>
         )}
