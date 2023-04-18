@@ -41,6 +41,6 @@ Comprador de prueba 2:
 Usuario: TEST_USER_399718393
 Contrasena: XBWVdDIf39
 
-Link deploy (pronto se actualizara para que tenga los nuevos cambios): https://games-store-v.netlify.app/
+Link deploy (pronto se actualizara para que tenga los nuevos cambios): https://games-store-v.netlify.app/  (a veces el despliegue muere)
 
 ACLARACION: Para que sus compras aparezcan en la " LIBRARY ", su cuenta tiene que estar verificada (Se esta trabjando en esto).
