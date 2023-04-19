@@ -47,7 +47,7 @@ export const Card = ({
     }
   }, []);
 
-  const addProductToWishListHanlder = async () => {
+  const hanldeAddProductToWishList = async () => {
     const newWishList = user && (await addProductToWishList(user.email, id));
     dispatch(setwishList(newWishList));
   };
@@ -101,7 +101,7 @@ export const Card = ({
                   {isAuthenticated === true && (
                     <button
                       className={changeClass.classButton}
-                      onClick={addProductToWishListHanlder}
+                      onClick={hanldeAddProductToWishList}
                     >
                       Add Favourite
                     </button>

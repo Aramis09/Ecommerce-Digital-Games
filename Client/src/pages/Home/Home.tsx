@@ -4,15 +4,21 @@ import { Footer } from "../../components/Footer/Footer";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.scss";
 import { useState } from "react";
+import { paramstoRenderHome } from "../../utils/constants";
+import { useNavigatePaginate } from "../../CustomHooks/useNavigatePaginate";
 
 export const Home = () => {
   const [productsCarrousel, setProductsCarrousel] = useState([]);
-
+  const [topProductsData, setTopProductsData] =
+    useNavigatePaginate(paramstoRenderHome);
   return (
     <div className={styles.container}>
-      <Carousel bestThreeProducts={productsCarrousel} />
+      {/* <Carousel bestThreeProducts={productsCarrousel} /> */}
       <h2 className={styles.title}>TOP GAMES</h2>
-      <Product setProductsCarrousel={setProductsCarrousel} />
+      <Product
+        products={topProductsData}
+        setProductsCarrousel={setProductsCarrousel}
+      />
       <Link to={"/products"}>
         <button
           className={styles["More-products-btn"]}

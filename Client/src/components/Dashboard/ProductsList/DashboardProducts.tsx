@@ -2,7 +2,7 @@ import { DashboardNav } from "../Nav/DashboardNav";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { getListUsers } from "../../../redux/actions/userAction";
-import { EDIT_PRODUCT } from "../../../utils/constants";
+import { EDIT_PRODUCT, inititalStateFilters } from "../../../utils/constants";
 import { Game } from "../../../types";
 import axios from "axios";
 import iconSearch from "../../../assets/search.svg";
@@ -12,7 +12,6 @@ import editIcon from "../../../assets/edit.svg";
 import styles from "./DashboardProducts.module.css";
 import { RootState } from "../../../redux/store";
 import { getProductsFiltered } from "../../../Controller/FiltersController";
-import { inititalStateFilters } from "../../Filters/until";
 
 export const DashboardProducts = () => {
   const [showModal, setShowModal] = useState(false);
@@ -45,7 +44,7 @@ export const DashboardProducts = () => {
   const dispatch = useAppDispatch();
   //AramisWork:Tengo que implementar un paginado en este componente,  ademas tengo que modularizar TODO.
   useEffect(() => {
-    getProductsFiltered(inititalStateFilters, 1).then(
+    getProductsFiltered({ filters: inititalStateFilters, pageNumber: 1 }).then(
       (productList) => productList && setListProducts(productList)
     );
     dispatch(getListUsers());

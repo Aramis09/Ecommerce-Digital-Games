@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { inititalStateFilters } from '../components/Filters/until';
 interface customHookPaginate {
   key:string
   asynchronousFunction:any

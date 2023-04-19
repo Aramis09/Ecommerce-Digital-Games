@@ -47,7 +47,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (user !== undefined) {
+    if (user) {
       dispatch(saveNewUser(user.email, user.name, user.picture));
     }
   }, [user]);

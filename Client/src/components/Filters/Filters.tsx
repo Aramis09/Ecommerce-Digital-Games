@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { PriceSlider } from "../PriceSlider/PriceSlider";
 import styles from "./Filters.module.scss";
 import { genreType, getListGenres } from "../../Controller/GenresController";
-import { inititalStateFilters } from "./until";
+import { inititalStateFilters } from "../../utils/constants";
 interface filterPropertyType {
   genres: number[];
   platform: [];

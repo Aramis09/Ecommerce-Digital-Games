@@ -1,3 +1,7 @@
+import { getFirstBestProducts } from "../Controller/CarrouselController";
+import { getProductsFiltered } from "../Controller/FiltersController";
+import { filtersGeneralType } from "../components/Filters/Filters";
+
 export const LIST_PRODUCTS='http://localhost:3001/products/';
 export const LIST_PRODUCTS_FRONT='http://localhost:3001/';
 export const LIST_PRODUCTS_BY_PLATFORMS='http://localhost:3001/products/platforms';
@@ -32,3 +36,30 @@ export const EDIT_PRODUCT = 'http://localhost:3001/admin/editProduct'
 export const SHOPPING_CART='shoppingCart';
 export const TOTAL_AMOUNT='totalAmount';
 export const SAVE_SHOPPINGCART_LOCALSTORAGE_IN_DB='http://localhost:3001/user/allProductInShoppingCart';
+
+
+export const inititalStateFilters:filtersGeneralType = {
+  name: "",
+  filters: {
+    genres: [],
+    platform: [],
+    priceRange: [0, 1000],
+  },
+  order: {
+    alphabetic: "DESC",
+    price: "",
+  },
+}
+
+export const paramsToRenderListProducts ={
+  key: "productsPaginate",
+  asynchronousFunction: getProductsFiltered,
+  paramsFunction: { filters: inititalStateFilters },
+}
+
+
+export const paramstoRenderHome = {
+  key: "productsHome",
+  asynchronousFunction: getFirstBestProducts,
+  paramsFunction: { quantityProducts: 6 },
+}
