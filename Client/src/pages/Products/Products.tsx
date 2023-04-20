@@ -4,16 +4,11 @@ import styles from "./Products.module.scss";
 import iconFilters from "./images/filter.png";
 import { PaginateProducts } from "../../components/PaginateProducts/PaginateProducts";
 import { useNavigatePaginate } from "../../CustomHooks/useNavigatePaginate";
-import {
-  inititalStateFilters,
-  paramsToRenderListProducts,
-} from "../../utils/constants";
+import { paramsToRenderListProducts } from "../../utils/constants";
 import { Product } from "../../components/Product/Product";
 
 export const Products = () => {
   const [changeClass, setChangeClass] = useState(false);
-  const [filters, setFilters] =
-    useState<filtersGeneralType>(inititalStateFilters);
 
   const [productList, setProductList, nextPaginate, modifyParams] =
     useNavigatePaginate(paramsToRenderListProducts);
@@ -23,7 +18,7 @@ export const Products = () => {
     filters: filtersGeneralType,
     currentPage: number = 1
   ) => {
-    setFilters(filters);
+    // setFilters(filters);
     modifyParams({ filters });
   };
 
