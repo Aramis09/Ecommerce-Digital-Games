@@ -1,8 +1,6 @@
 
 # Como surgió este proyecto ? 
-Este proyecto fue creado por 8 personas, la idea principal era definir todo en un lapso de 3 semanas, sin embargo, solo terminamos trabajando 4. Es decir que casi todo lo que se ve aquí lo hicieron 4 personas, este es el link del repositorio principal: https://github.com/Aramis09/Proyecto-Final-Ecommerce-Equipo-5.  
-
-(Las contribuciones son un poco falsas, hubo cosas internas del equipo que hizo que se modificaran y marca que gente que no trabajo si trabajaron) 
+Este proyecto fue creado por 8 personas, la idea principal era definir todo en un lapso de 3 semanas, sin embargo, solo terminamos trabajando 5. Es decir que casi todo lo que se ve aquí lo hicieron 4 personas, este es el link del repositorio principal: https://github.com/Aramis09/Proyecto-Final-Ecommerce-Equipo-5.  
 
 Trabajadores: 
 https://github.com/juancruzrocha 
@@ -23,11 +21,13 @@ Ahora mismo se ha separado del repositorio principal, porque quede solo yo traba
    /Api ---> En estos directorios hacer npm installl 
    /Client ---> En estos directorios hacer  npm install 
 
-2)Para que todo funcione bien, se tiene que agreagar la variable de entorno en la carpeta raiz del servidor (/Api). 
+2) Clonar este repositorio: https://github.com/Aramis09/ApisGames, hacer npm install antes de hacer y correrlo con npm start.
+
+3)Para que todo funcione bien, se tiene que agreagar la variable de entorno en la carpeta raiz del servidor (/Api). 
   Crear un archivo exactamente de esta forma “ .env ”, luego de esto se tiene que agregar la variable de entorno de la base de datos. 
   DB_DATA = “string de su base de datos”. 
 
-3)Correr el cliente “ /Client ” con  “ npm run dev ” y el servidor con “ npm start”.
+4)Correr el cliente “ /Client ” con  “ npm run dev ” y el servidor con “ npm start”.
 
 ACLARACION: NO SE PUEDE COMPRAR YA QUE NECESITA UN TOKEN PRIVADO DE MERCADO PAGO Y NO SE LO PUEDE COMPARTIR, PARA PROBAR QUE FUNCIONA LA PASARELA DE PAGO SE TIENE QUE IR AL DEPLOY Y COMPRAR CON UNA CUENTA DE PRUEBA DE MERCADO PAGO.
 
