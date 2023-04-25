@@ -17,6 +17,7 @@ export interface CardPropsType {
   background_image:string
   genres:string[]
   id:number
+  images:string[]
   name:string
   price:string
   state:boolean

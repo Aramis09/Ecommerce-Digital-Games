@@ -1,33 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import buttonIcon1 from "../../assets/circle-1-filled.svg";
 import buttonIcon2 from "../../assets/circle-2-filled.svg";
 import buttonIcon3 from "../../assets/circle-3-filled.svg";
 import styles from "./Carousel.module.scss";
 import { Game } from "../../types";
-import { getFirstBestProducts } from "../../Controller/CarrouselController";
-import { useLocalStorage } from "../../CustomHooks/useLocalStorage";
-
-export const Carousel = () => {
+interface CarrouselType {
+  bestThreeProducts: Game[];
+}
+export const Carousel = ({ bestThreeProducts }: CarrouselType): JSX.Element => {
   const [currentImage, setCurrentImage] = useState(0);
-  // const [bestThreeProducts, setBestThreeProducts] = useState<Game[]>([]);
-  const [bestThreeProducts, setBestThreeProducts] = useLocalStorage(
-    "productsHome",
-    [],
-    getFirstBestProducts,
-    6
-  );
-  // useEffect(() => {
-  //   getFirstBestProducts(3).then(
-  //     (threeProducts) => threeProducts && setBestThreeProducts(threeProducts)
-  //   );
-  // }, []);
 
   return (
     <>
       <div className={styles["carousel-container"]}>
-        {bestThreeProducts.length &&
-          bestThreeProducts.map((item: any, index) => {
+        {bestThreeProducts.length ? (
+          bestThreeProducts.map((item: Game, index: number) => {
             return (
               <div key={index} className={styles["card-carousel"]}>
                 <div className={styles["img-carousel"]}>
@@ -49,7 +37,10 @@ export const Carousel = () => {
                 </div>
               </div>
             );
-          })}
+          })
+        ) : (
+          <p>...loading</p>
+        )}
       </div>
       <div className={styles["carousel-buttons--change"]}>
         <img src={buttonIcon1} alt="" onClick={() => setCurrentImage(0)} />

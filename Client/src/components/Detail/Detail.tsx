@@ -9,8 +9,10 @@ import { checkIfProductWasPurchased } from "../../Controller/cardController";
 import { RootState } from "../../redux/store";
 import { Game } from "../../types";
 import { getProductByID } from "../../Controller/DetailController";
+import ButtonAddShoopingCart from "../ButtonAddShoppingCart/ButtonAddShoopingCart";
+import ButtonAddFavourites from "../ButtonAddFavourites/ButtonAddFavourites";
 
-export const Detail = () => {
+export const Detail = (): JSX.Element => {
   const [porductDetail, setProductDetail] = useState<Game | false>(false);
   const [changeClass, setChangeClass] = useState({
     classButton: styles.buttonAdd,
@@ -57,14 +59,9 @@ export const Detail = () => {
                 <div key={porductDetail.id}>
                   <h3>{porductDetail.name}</h3>
                   <p>${porductDetail.price}</p>
-                  <Rating value={porductDetail.rating} size={24} />
-                  <button
-                    className={changeClass.classButton}
-                    type="button"
-                    // onClick={addingToShoppingCart}
-                  >
-                    Add To Cart
-                  </button>
+                  <Rating value={Number(porductDetail.rating)} size={24} />
+                  <ButtonAddShoopingCart id={id} productData={porductDetail} />
+                  <ButtonAddFavourites id={id} />
                 </div>
               </div>
               <div className={styles["right-section"]}>
@@ -88,7 +85,7 @@ export const Detail = () => {
               </div>
             </section>
             <DetailCarousel images={porductDetail.images} />
-            <Comments />
+            <Comments id={id} />
           </div>
         )}
       </div>

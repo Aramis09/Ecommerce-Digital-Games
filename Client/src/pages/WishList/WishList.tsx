@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { RootState } from "../../redux/store";
 import styles from "./WishList.module.scss";
 import WishCard from "../../components/WhishCard/WishCard";
-import NavbarPhone from "../../phone/navBarPhone/navBarPhone";
 
 const WishList = () => {
   const wishListStore = useAppSelector(
